@@ -36,7 +36,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
+          # Upload web directory of repository
+          # Index rout will be ~/web/index.
           path: './web'
       - name: Deploy to GitHub Pages
         id: deployment
