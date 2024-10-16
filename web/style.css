@@ -17,7 +17,13 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow: scroll !important;
+    overflow: auto !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 div#pagecolumn {
