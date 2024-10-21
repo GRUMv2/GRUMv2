@@ -1,7 +1,7 @@
 # GRUMv2
 [Site](https://grumv2.github.io/)  
 [Docs](./docs/index.md)
-- [Progress Timeline](./docs/progress/index.md)
+- [Progress Timeline](./docs/timeline/index.md)
 - [Architecture](./docs/architecture/index.md)
 
 ---
