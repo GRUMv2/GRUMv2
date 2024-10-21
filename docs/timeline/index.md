@@ -1,3 +1,6 @@
+# Progress Timeline
+<!--![Gantt](./planGantt.png)-->
+```plantuml
 @startgantt
 [Group introductions] requires 1 day
 [Website and Github setup] requires 1 day
@@ -16,3 +19,11 @@ Project starts 2024-09-26
 [Customer interview] starts at [Organise questions for interview]'s end
 [w3] starts at [Customer interview]'s end
 @endgantt
+```
+
+### Snapshots
+###### Week 2
+![Week 2](./week2Snapshot.png)
+
+###### Week 3
+![Week 3](./week3Snapshot.png)
