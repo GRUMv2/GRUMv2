@@ -4,9 +4,9 @@ import grymV2.game.Popup;
 import java.util.ArrayList;
 
 class Eve extends Thread {
-    private ArrayList<Popop> currentPopups;
+    private ArrayList<Popup> currentPopups;
 
-    public ArrayList<Popop> getCurrentPopups() {
+    public ArrayList<Popup> getCurrentPopups() {
         return currentPopups;
     }
 
