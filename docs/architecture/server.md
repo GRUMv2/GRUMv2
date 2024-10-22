@@ -1,9 +1,11 @@
 ```plantuml
+@startuml
 class NoteToTheReader {
     - atribute
     # constant
     + function()
 }
+@enduml
 ```
 
 ```plantuml
@@ -54,7 +56,7 @@ package "Server" {
 			+ tick(time: int): bool  
 		}
 		
-		class MetiorEvent extends Event {
+		class MeteorEvent extends Event {
 			# start_time: int = 120  
 			+ tick(time: int): bool  
 		}
@@ -71,7 +73,7 @@ The entire event system is handled by the EventHandler class, it keeps two lists
 ged by the tick function depending on the events current need, thus this could be used to _pause_ and event for x ticks
 
 ```plantuml
-class MetiorEvent {
+class MeteorEvent {
 	# start_time: int = 120  
 	+ tick(time: int): bool  
 }
