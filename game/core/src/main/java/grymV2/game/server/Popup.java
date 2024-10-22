@@ -12,7 +12,7 @@ class Popup {
     private String message;
     private float duration;
 
-    public grymV2.game.PopupType getType() {
+    public PopupType getType() {
         return type;
     }
 
