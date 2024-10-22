@@ -7,10 +7,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import grymV2.game.Eve;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
+public class Adam extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
+    private Eve server;
+
+    public Adam() {
+        // Load and start the Server Thread
+        server = new Eve();
+        server.start();
+    }
 
     @Override
     public void create() {
