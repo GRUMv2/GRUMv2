@@ -82,4 +82,3 @@ class MeteorEvent {
 Events can be created by making a new class inheriting from Event and defining `start_time` and `tick`. The example `MeteorEvent` will start processing two minutes into the game, the `tick` function could then replace a random road tile for a broken road tile.
 
 The reason for the `start_time`, `:bool`, and `run_every` are to save performance, some events might incur a heavy system load, like for example checking the relative location of specific buildings, these may not need to run every tick or at all during the first few minuets of the game. Giving Event's the ability to control this allows for significant optimization with minimal extra effort. 
-
