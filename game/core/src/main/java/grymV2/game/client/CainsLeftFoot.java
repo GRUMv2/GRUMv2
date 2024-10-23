@@ -1,13 +1,14 @@
 package grymV2.game.client;
 
 import grymV2.game.Grid;
+import java.util.EnumMap;
 
 /**
  * Cain's Left Foot - Game
  */
 public class CainsLeftFoot extends AbstractGameScreen {
-    public CainsLeftFoot(Cain manager, Grid grid) {
-        super(manager, grid);
+    public CainsLeftFoot(Cain manager, EnumMap<RenderStates, Grid> grids) {
+        super(manager, grids);
     }
 
     @Override

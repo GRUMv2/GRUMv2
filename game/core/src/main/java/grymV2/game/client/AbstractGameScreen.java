@@ -1,5 +1,7 @@
 package grymV2.game.client;
 
+import java.util.EnumMap;
+
 import com.badlogic.gdx.Screen;
 
 import grymV2.game.Grid;
@@ -7,12 +9,12 @@ import grymV2.game.Grid;
 public abstract class AbstractGameScreen implements Screen {
 
     final Cain manager;
-    final Grid grid;
+    final EnumMap<RenderStates, Grid> grids;
     int ID;
 
-    public AbstractGameScreen(Cain manager, Grid grid) {
+    public AbstractGameScreen(Cain manager, EnumMap<RenderStates, Grid> grids) {
         this.manager = manager;
-        this.grid = grid;
+        this.grids = grids;
     }
 
     public void render(float delta) {

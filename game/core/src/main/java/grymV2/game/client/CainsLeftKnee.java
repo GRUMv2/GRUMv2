@@ -1,13 +1,14 @@
 package grymV2.game.client;
 
 import grymV2.game.Grid;
+import java.util.EnumMap;
 
 /**
  * Cain's Left Knee - Pause Screen
  */
 public class CainsLeftKnee extends AbstractGameScreen {
-    public CainsLeftKnee(Cain manager, Grid grid) {
-        super(manager, grid);
+    public CainsLeftKnee(Cain manager, EnumMap<RenderStates, Grid> grids) {
+        super(manager, grids);
     }
 
     @Override
