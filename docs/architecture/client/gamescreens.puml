@@ -1,0 +1,43 @@
+@startuml
+actor User
+participant "Cain's 3rd Left Toe (InputHandler)" as InputHandler #c912c9
+participant "Cain's Left Foot (GameScreen)" as GameScreen #11f7f7
+participant "Cain's Left Knee (PauseScreen)" as PauseScreen #11f7f7
+participant Cain #00FF00
+participant Abel #00FF00
+participant Eve #yellow
+participant Adam #red
+
+activate GameScreen
+Adam -> Cain: Switch screens (Start Game)
+Cain -> GameScreen: SetScreen
+loop "Game loop"
+activate GameScreen
+GameScreen -> GameScreen: StartRender
+GameScreen -> InputHandler: Handle
+InputHandler -> GameScreen: Handle
+GameScreen -> GameScreen: EndRender
+end loop
+GameScreen -> InputHandler: Handle
+User -> InputHandler: "ESC"
+InputHandler -> GameScreen: Pause Game
+deactivate GameScreen
+GameScreen -> Cain: Pause Game
+group Handle pause event
+    Cain -> Adam: Pause Game
+    Adam -> Eve: Pause Server
+    Eve -> Abel: Pause Server
+    Abel ->]: Pause Server
+    Adam -> Cain: Switch screens
+    Cain -> PauseScreen: SetScreen
+    deactivate GameScreen
+    activate PauseScreen
+end
+loop "Pause Loop"
+    PauseScreen -> PauseScreen: StartRender
+    PauseScreen -> InputHandler: Handle
+    InputHandler -> PauseScreen: Handle
+    PauseScreen -> PauseScreen: EndRender
+end loop
+deactivate PauseScreen
+@enduml
