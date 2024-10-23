@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import grymV2.game.Event;
-import grymV2.game.RishiSunac;
+import grymV2.game.RishiSunak;
 
 class EventHandler {
-    private ArrayList<Event> eventQue;
+    private ArrayList<Event> eventQueue;
     private ArrayList<Event> eventPool;
 
-    public void tick(int time) {
+    public void tick(float time) {
         // move events to the pool if the time is right
-        Iterator<Event> addIterator = eventQue.iterator();
+        Iterator<Event> addIterator = eventQueue.iterator();
         while (addIterator.hasNext()) {
             Event e = addIterator.next();
 
@@ -38,9 +38,9 @@ class EventHandler {
     }
 
     public void EventHndler() {
-        eventQue = new ArrayList<Event>();
+        eventQueue = new ArrayList<Event>();
 
         // Add all events
-        eventQue.add(new RishiSunac());
+        eventQueue.add(new RishiSunak());
     }
 }
