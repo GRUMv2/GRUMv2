@@ -3,7 +3,7 @@ package grymV2.game;
 import grymV2.game.Popup;
 import java.util.ArrayList;
 
-class Eve extends Thread {
+class Abel extends Thread {
     private ArrayList<Popup> currentPopups;
 
     public ArrayList<Popup> getCurrentPopups() {
