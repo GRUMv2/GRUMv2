@@ -1,7 +1,7 @@
 package grymV2.game;
 
 abstract class Event {
-    private const float startTime;
+    private float startTime;
     private float runEvery;
 
     public float getRunEvery() {
@@ -12,5 +12,5 @@ abstract class Event {
         return startTime;
     }
 
-    abstract public boolean tick(float time)
+    abstract public boolean tick(float time);
 }
