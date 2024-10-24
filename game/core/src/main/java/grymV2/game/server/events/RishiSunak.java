@@ -1,8 +1,8 @@
-package grymV2.game;
+package grymV2.game.server.events;
 
-import grymV2.game.Event;
+import grymV2.game.server.Event;
 
-class RishiSunak extends Event {
+public class RishiSunak extends Event {
     private final float startTime = 120f;
     private float runEvery = 1f;
 

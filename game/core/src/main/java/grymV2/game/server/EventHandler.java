@@ -1,10 +1,10 @@
-package grymV2.game;
+package grymV2.game.server;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import grymV2.game.Event;
-import grymV2.game.RishiSunak;
+import grymV2.game.server.Event;
+import grymV2.game.server.events.RishiSunak;
 
 class EventHandler {
     private ArrayList<Event> eventQueue;
