@@ -8,36 +8,34 @@ participant Abel #00FF00
 participant Eve #yellow
 participant Adam #red
 
-activate GameScreen
+activate GameScreen #11f7f7
 Adam -> Cain: Switch screens (Start Game)
 Cain -> GameScreen: SetScreen
 loop "Game loop"
-activate GameScreen
-GameScreen -> GameScreen: StartRender
-GameScreen -> InputHandler: Handle
-InputHandler -> GameScreen: Handle
-GameScreen -> GameScreen: EndRender
+GameScreen -[#red]> GameScreen: startRender
+GameScreen -[#red]> InputHandler: startHandle
+InputHandler -[#blue]> GameScreen: endHandle
+GameScreen -[#blue]> GameScreen: endRender
 end loop
-GameScreen -> InputHandler: Handle
+GameScreen -[#red]> InputHandler: startHandle
 User -> InputHandler: "ESC"
-InputHandler -> GameScreen: Pause Game
-deactivate GameScreen
+InputHandler -[#blue]> GameScreen: Pause Game (endHandle)
 GameScreen -> Cain: Pause Game
 group Handle pause event
-    Cain -> Adam: Pause Game
+    Cain -[#red]> Adam: Pause Game (renderEvent)
     Adam -> Eve: Pause Server
     Eve -> Abel: Pause Server
     Abel ->]: Pause Server
-    Adam -> Cain: Switch screens
+    Adam -[#blue]> Cain: Switch screens
     Cain -> PauseScreen: SetScreen
     deactivate GameScreen
-    activate PauseScreen
+    activate PauseScreen #11f7f7
 end
 loop "Pause Loop"
-    PauseScreen -> PauseScreen: StartRender
-    PauseScreen -> InputHandler: Handle
-    InputHandler -> PauseScreen: Handle
-    PauseScreen -> PauseScreen: EndRender
+    PauseScreen -[#red]> PauseScreen: startRender
+    PauseScreen -[#red]> InputHandler: startHandle
+    InputHandler -[#blue]> PauseScreen: endHandle
+    PauseScreen -[#blue]> PauseScreen: endRender
 end loop
 deactivate PauseScreen
 @enduml
