@@ -1,0 +1,48 @@
+@startuml
+actor User
+participant GlobalInputListener as Listener #orange
+participant MenuInputHandler #yellow
+participant MenuScreen #11f7f7
+participant Cain #00FF00
+participant GameScreen #11f7f7
+participant GameInputHandler #yellow
+== Init ==
+Cain -> Listener: Init listener
+Cain -> MenuInputHandler: Init handler
+Cain -> GameInputHandler: Init handler
+== Main Menu ==
+group Cain.setScreen(MENU)
+    Cain -> MenuScreen: setScreen(MENU)
+    activate MenuScreen #blue
+    Cain -> Listener: Listener.setHandler(MenuInputHandler)
+    activate MenuInputHandler #red
+end
+loop "Menu loop"
+    MenuScreen -> MenuInputHandler: Handle
+    User -> Listener: InputEvent
+    Listener -> MenuInputHandler: HandleEvent
+    MenuInputHandler -> MenuScreen: Handle
+end loop
+MenuScreen -> MenuInputHandler: startHandle
+User -> Listener: Screen change event input
+Listener -> MenuInputHandler: HandleEvent 
+MenuInputHandler -> MenuScreen: endHandle 
+MenuScreen -> Cain: Change Screen
+== Game Screen ==
+group Cain.setScreen(GAME)
+    deactivate MenuScreen
+    Cain -> GameScreen: setScreen(GAME)
+    activate GameScreen #blue
+    deactivate MenuInputHandler #red
+    Cain -> Listener: Listener.setHandler(GameInputHandler)
+    activate GameInputHandler #red
+end
+loop "Game loop"
+    GameScreen -> GameInputHandler: startHandle
+    User -> Listener: InputEvent
+    Listener -> GameInputHandler: HandleEvent
+    GameInputHandler -> GameScreen: endHandle
+end loop
+@enduml
+
+
