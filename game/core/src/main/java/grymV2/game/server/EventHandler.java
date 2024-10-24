@@ -37,7 +37,7 @@ class EventHandler {
         }
     }
 
-    public void EventHndler() {
+    public void EventHandler() {
         eventQueue = new ArrayList<Event>();
 
         // Add all events
