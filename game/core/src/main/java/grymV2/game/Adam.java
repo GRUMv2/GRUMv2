@@ -1,41 +1,41 @@
 package grymV2.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-
-import grymV2.game.Eve;
+import com.badlogic.gdx.Game;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Adam extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
+public class Adam extends Game {
     private Eve gameLoader;
+    // private Cain renderer;
 
     public Adam() {
+        // Load settings of some sort, e.g. predefined viewport values
         gameLoader = new Eve();
+        // this.renderer = Eve.birth(new Cain)
     }
 
-    @Override
+    /**
+     *
+     * Springsteen - Darkness on the Edge of Town, track 02
+     *
+     */
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        // batch
+        // font
+        // viewport
+        // potentially need to define GlobalInputListener here
+        // Cain.audio.init, if not handled by Screens
+        // Cain.setScreen(MENU)
     }
 
-    @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        super.render();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        // batch.dispose()
+        // font.dispose()
+        super.dispose();
     }
+
 }
