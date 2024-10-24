@@ -1,6 +1,6 @@
-package grymV2.game;
+package grymV2.game.server;
 
-abstract class Event {
+public abstract class Event {
     private float startTime;
     private float runEvery;
 

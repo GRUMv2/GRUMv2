@@ -1,4 +1,4 @@
-package grymV2.game;
+package grymV2.game.server;
 
 enum PopupType {
     DEBUG,
