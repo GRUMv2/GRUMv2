@@ -5,12 +5,17 @@ import com.badlogic.gdx.Game;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Adam extends Game {
     private Eve gameLoader;
-    // private Cain renderer;
+    // private Cain client;
 
     public Adam() {
         // Load settings of some sort, e.g. predefined viewport values
+        // log4j.DO_LOG()
+
         gameLoader = new Eve();
-        // this.renderer = Eve.birth(new Cain)
+        // gameLoader = new Eve(Settings settings);
+        // this.client = gameLoader.client
+        //      Adam.client/Adam.serverThread.server
+        //  vs  Adam.Eve.{client,server...}
     }
 
     /**
@@ -19,12 +24,8 @@ public class Adam extends Game {
      *
      */
     public void create() {
-        // batch
-        // font
-        // viewport
-        // potentially need to define GlobalInputListener here
-        // Cain.audio.init, if not handled by Screens
-        // Cain.setScreen(MENU)
+        // try pass everything to Cain; Adam's libGDX is just a puppet wrapper
+        // this.client.create();
     }
 
     public void render() {
@@ -33,9 +34,31 @@ public class Adam extends Game {
 
     @Override
     public void dispose() {
-        // batch.dispose()
-        // font.dispose()
+        // this.client.dispose()
         super.dispose();
     }
 
+    /**
+     * public void renderEvent(RenderEvent event)
+     *     case $event in
+     *         PAUSE)
+     *             this.serverThread.server.gameEvent($event)
+     *             this.client.setScreen(PAUSE)
+     *             ...
+     *             ;;
+     *         RESUME)
+     *             this.serverThread.server.gameEvent($event)
+     *             this.client.setScreen(GAME)
+     *             ...
+     *             ;;
+     *         OHSHIT)
+     *             this.serverThread.server.gameEvent(CRASH)
+     *             self.dispose()
+     *             ;;
+     *         ...
+     *         etc
+     *     esac
+     *
+     *
+     */
 }
