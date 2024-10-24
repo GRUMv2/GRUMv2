@@ -13,35 +13,35 @@ Cain -> GameInputHandler: Init handler
 == Main Menu ==
 group Cain.setScreen(MENU)
     Cain -> MenuScreen: setScreen(MENU)
-    activate MenuScreen #blue
+    activate MenuScreen #11f7f7
     Cain -> Listener: Listener.setHandler(MenuInputHandler)
-    activate MenuInputHandler #red
+    activate MenuInputHandler #yellow
 end
 loop "Menu loop"
-    MenuScreen -> MenuInputHandler: Handle
+    MenuScreen -[#red]> MenuInputHandler: startHandle
     User -> Listener: InputEvent
     Listener -> MenuInputHandler: HandleEvent
-    MenuInputHandler -> MenuScreen: Handle
+    MenuInputHandler -[#blue]> MenuScreen: endHandle
 end loop
-MenuScreen -> MenuInputHandler: startHandle
+MenuScreen -[#red]> MenuInputHandler: startHandle
 User -> Listener: Screen change event input
 Listener -> MenuInputHandler: HandleEvent 
-MenuInputHandler -> MenuScreen: endHandle 
+MenuInputHandler -[#blue]> MenuScreen: endHandle 
 MenuScreen -> Cain: Change Screen
 == Game Screen ==
 group Cain.setScreen(GAME)
     deactivate MenuScreen
     Cain -> GameScreen: setScreen(GAME)
-    activate GameScreen #blue
-    deactivate MenuInputHandler #red
+    activate GameScreen #11f7f7
+    deactivate MenuInputHandler
     Cain -> Listener: Listener.setHandler(GameInputHandler)
-    activate GameInputHandler #red
+    activate GameInputHandler #yellow
 end
 loop "Game loop"
-    GameScreen -> GameInputHandler: startHandle
+    GameScreen -[#red]> GameInputHandler: startHandle
     User -> Listener: InputEvent
     Listener -> GameInputHandler: HandleEvent
-    GameInputHandler -> GameScreen: endHandle
+    GameInputHandler -[#blue]> GameScreen: endHandle
 end loop
 @enduml
 
