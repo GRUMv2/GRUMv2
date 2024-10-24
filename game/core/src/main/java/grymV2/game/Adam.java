@@ -13,12 +13,10 @@ import grymV2.game.Eve;
 public class Adam extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
-    private Eve server;
+    private Eve gameLoader;
 
     public Adam() {
-        // Load and start the Server Thread
-        server = new Eve();
-        server.start();
+        gameLoader = new Eve();
     }
 
     @Override

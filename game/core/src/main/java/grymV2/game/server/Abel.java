@@ -1,12 +1,12 @@
-package grymV2.game;
+package grymV2.game.server;
 
-import grymV2.game.Popup;
+import grymV2.game.server.Popup;
 import java.util.ArrayList;
 
-class Eve extends Thread {
-    private ArrayList<Popop> currentPopups;
+public class Abel extends Thread {
+    private ArrayList<Popup> currentPopups;
 
-    public ArrayList<Popop> getCurrentPopups() {
+    public ArrayList<Popup> getCurrentPopups() {
         return currentPopups;
     }
 
