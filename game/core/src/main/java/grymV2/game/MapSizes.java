@@ -2,18 +2,27 @@ package grymV2.game;
 
 public enum MapSizes {
     // x-values for map sizes
-    SMALL(12),
-    MEDIUM(24),
-    LARGE(36),
-    HUGE(48);
+    SMALL((byte) 12),
+    MEDIUM((byte) 24),
+    LARGE((byte) 36),
+    HUGE((byte) 48);
 
-    private final int size;
+    private final byte size;
 
-    private MapSizes(int size) {
+    private MapSizes(byte size) {
         this.size = size;
     }
 
-    public int getSize() {
+    public byte getSize() {
         return size;
+    }
+
+    public byte getX() {
+        return size;
+    }
+
+    public byte getY() {
+        // Just assume 16:9 for now and let Viewport handle it
+        return (byte) Math.round(((float) size / 16f) * 9f);
     }
 }
