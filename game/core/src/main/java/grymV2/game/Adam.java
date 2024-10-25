@@ -1,41 +1,64 @@
 package grymV2.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-
-import grymV2.game.Eve;
+import com.badlogic.gdx.Game;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Adam extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
+public class Adam extends Game {
     private Eve gameLoader;
+    // private Cain client;
 
     public Adam() {
+        // Load settings of some sort, e.g. predefined viewport values
+        // log4j.DO_LOG()
+
         gameLoader = new Eve();
+        // gameLoader = new Eve(Settings settings);
+        // this.client = gameLoader.client
+        //      Adam.client/Adam.serverThread.server
+        //  vs  Adam.Eve.{client,server...}
     }
 
-    @Override
+    /**
+     *
+     * Springsteen - Darkness on the Edge of Town, track 02
+     *
+     */
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        // try pass everything to Cain; Adam's libGDX is just a puppet wrapper
+        // this.client.create();
     }
 
-    @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        super.render();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        // this.client.dispose()
+        super.dispose();
     }
+
+    /**
+     * public void renderEvent(RenderEvent event)
+     *     case $event in
+     *         PAUSE)
+     *             this.serverThread.server.gameEvent($event)
+     *             this.client.setScreen(PAUSE)
+     *             ...
+     *             ;;
+     *         RESUME)
+     *             this.serverThread.server.gameEvent($event)
+     *             this.client.setScreen(GAME)
+     *             ...
+     *             ;;
+     *         OHSHIT)
+     *             this.serverThread.server.gameEvent(CRASH)
+     *             self.dispose()
+     *             ;;
+     *         ...
+     *         etc
+     *     esac
+     *
+     *
+     */
 }

@@ -1,0 +1,20 @@
+@startuml
+participant Logger #lightgrey
+database Grid #pink
+participant Adam #red
+participant Eve #yellow
+/'citizen Kane'/
+participant Cain #aqua
+participant Abel #aqua
+== init ==
+[-[#green]> Adam: "And God saw that it was good"
+Adam -> Logger: Start logger
+Adam -> Adam: Load settings
+Adam -> Eve: Game loader
+Eve -[#red]> Grid: startInitGrid 
+Grid -> Grid: Load map
+note over Grid: perhaps assets or something
+Grid -[#blue]> Eve: endInitGrid
+Eve -> Abel: doServer
+Eve -> Cain: doClient
+@enduml
