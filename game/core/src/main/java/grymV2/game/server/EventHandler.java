@@ -3,10 +3,14 @@ package grymV2.game.server;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import grymV2.game.server.Event;
 import grymV2.game.server.events.RishiSunak;
 
 class EventHandler {
+    private static final Logger logger = LogManager.getLogger(EventHandler.class);
     private ArrayList<Event> eventQueue;
     private ArrayList<Event> eventPool;
 
@@ -19,9 +23,9 @@ class EventHandler {
             if (e.getStartTime() >= time) {
                 eventPool.add(e);
                 addIterator.remove();
-                System.out.println("Moved event " + e.getClass().getName() + " to the pool (starttime)");
+                logger.info("Moved event " + e.getClass().getName() + " to the pool (starttime)");
             }
-        } // aww thats poetic
+        }
 
         Iterator<Event> removeIterator = eventPool.iterator();
         while (removeIterator.hasNext()) {
@@ -32,7 +36,7 @@ class EventHandler {
             // remove event if it returns false
             if (!result) {
                 removeIterator.remove();
-                System.out.println("Removed event " + e.getClass().getName() + " from the pool (returned false)");
+                logger.info("Removed event " + e.getClass().getName() + " from the pool (returned false)");
             }
         }
     }
