@@ -12,7 +12,12 @@ class Eve {
     public Eve() {
         logger.debug("Creating and starting gameserver (Abel)");
 
-        gameThread = new Abel();
+        gameThread = new Abel(120);
         gameThread.start();
+    }
+
+    public void dispose() {
+        gameThread.endGame();
+
     }
 }
