@@ -44,8 +44,7 @@ public class Adam extends Game {
     @Override
     public void dispose() {
         logger.debug("LibGDX dispose");
-
-        // this.client.dispose()
+        this.gameLoader.dispose();
         super.dispose();
     }
 
