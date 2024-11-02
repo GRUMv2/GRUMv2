@@ -1,4 +1,4 @@
-package grymV2.game;
+package grymV2.game.grid;
 
 public enum MapSizes {
     // x-values for map sizes
