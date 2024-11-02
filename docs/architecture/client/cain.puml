@@ -1,0 +1,48 @@
+@startuml
+Actor User
+participant IP as "*globalPointerProcessor\n*globalKeyProcessor\n*screenPointerProcessor\n*screenKeyProcessor" #307080
+participant IH as "*GlobalInputHandler\n*GameInputHandler\n*MenuInputHandler\n*PauseInputHandler\n*EndInputHandler\n*NullInputHandler" #ffff00
+participant GIL as "GlobalInputListener"
+participant S as "*GameScreen\n*MenuScreen\n*PauseScreen\n*EndScreen"
+participant Cain #00FF00
+==Game Init==
+]-> Cain: (Eve) init Cain
+Cain -> GIL: Init GlobalInputListener
+GIL -> IP: init *Processors
+activate IP #307080
+GIL -> GIL: setHandler(NullInputHandler)
+GIL -> IH
+activate IH #afaf00
+note over IH
+    NullInputHandler
+end note
+Cain -> IH: init *Handlers
+]-> Cain: (Adam) setScreen(MENU)
+==Menu==
+Cain -> S: setScreen(MENU)
+deactivate IH
+Cain -> GIL: Listener.setHandler(MenuInputHandler)
+GIL -> IH
+activate IH #dfff00
+note over IH
+    MenuInputHandler 
+end note
+/'Cain -> RenderLogic'/
+/'Cain -> Renderer'/
+...<RenderLoop>...
+User -> IP: "Start Game"
+IP -> IH: "User did a thing"
+IH -> S: "Move to game screen"
+S -> Cain: "Move to game screen"
+Cain ->]: (Adam) "Move to game screen"
+]->Cain: setScreen(GAME)
+Cain -> S: setScreen(MENU)
+deactivate IH
+Cain -> GIL: Listener.setHandler(GameInputHandler)
+GIL -> IH
+activate IH #ffff00
+note over IH
+    GameInputHandler
+end note
+...<RenderLoop>...
+@enduml 
