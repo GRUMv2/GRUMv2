@@ -1,4 +1,4 @@
-package grymV2.game;
+package grymV2.game.grid;
 
 //import grymV2.game.client.RenderStates;       // XXX: implement
 
@@ -17,26 +17,6 @@ public class Grid {
     final private byte x;
     final private byte y;
 
-    private enum BackgroundTileTypes {
-        EMPTY,
-        RIVER,
-        CLIFF,
-        SAXONBURIALGROUND
-    }
-
-    private enum ForegroundTileTypes {
-        EMPTY,
-        BUILDING,
-        ROAD
-    }
-
-    private enum DynamicTileTypes {
-        // XXX
-    }
-
-    private enum PersonalTileTypes {
-        // XXX
-    }
 
     public Grid(MapSizes size) {
         this.size = size;
@@ -56,7 +36,7 @@ public class Grid {
         return y;
     }
 
-    public Grid getRenderGrid(RenderStates state) {
+    public GridLayer getRenderGrid(RenderStates state) {
         // TODO: Is it worth instantiating and passing to Cain a clone rather than the master <state>Grid?
         // Grid stateGrid = new Grid(this.getSize());
         // ...
@@ -79,6 +59,21 @@ public class Grid {
         }
 
         // XXX: UNFINISHED
+        return new GridLayer(); // (leave me alone) XXX
+    }
+
+    public void loadMap( /* Eve pass a thing */ ) {
+        // TODO: loadZmap
+
+        //for t in loadData; do       // TODO remember how to for loop in java
+        //    GridTile tile = map.tiles.get(Coord<t.x, t.y>)
+        //    tile.setTile(t.data)
+        //    map.updateLayers(tile)
+        //fi
+    }
+
+    private void updateLayers(GridTile tile) {
+        // TODO
     }
 
 }

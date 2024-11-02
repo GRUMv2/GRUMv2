@@ -1,13 +1,15 @@
-package grymV2.game;
+package grymV2.game.grid;
+
+import grymV2.game.client.RenderStates; // XXX
 
 /**
  * GridTile
  */
-abstract public class AbstractGridTile {
+public class GridTile {
     final private byte x;
     final private byte y;
 
-    public AbstractGridTile(byte x, byte y) {
+    public GridTile(byte x, byte y) {
         this.x = x;
         this.y = y;
     }
@@ -21,6 +23,6 @@ abstract public class AbstractGridTile {
     }
 
     public void setTile() {
-
+        // TODO
     }
 }
