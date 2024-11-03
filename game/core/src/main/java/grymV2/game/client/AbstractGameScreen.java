@@ -1,20 +1,18 @@
 package grymV2.game.client;
 
-import java.util.EnumMap;
-
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 
 import grymV2.game.Grid;
 
-public abstract class AbstractGameScreen implements Screen {
+public abstract class AbstractGameScreen extends ScreenAdapter {
 
     final Cain manager;
-    final EnumMap<RenderStates, Grid> grids;
-    int ID;
+    final Grid grid;
+    int ID; // TODO I can't remember what this was for
 
-    public AbstractGameScreen(Cain manager, EnumMap<RenderStates, Grid> grids) {
+    public AbstractGameScreen(Cain manager, Grid grid) {
         this.manager = manager;
-        this.grids = grids;
+        this.grid = grid;
     }
 
     public void render(float delta) {
@@ -32,23 +30,6 @@ public abstract class AbstractGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        manager.game.viewport.update(width, height, true);
-    }
-
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void show() {
-    }
-
-    @Override
-    public void hide() {
+        this.manager.viewport.update(width, height, true);
     }
 }
