@@ -1,15 +1,13 @@
 package grymV2.game.client;
 
-import java.util.EnumMap;
-
 import grymV2.game.Grid;
 
 /**
  * Cain's Left Eye - Main Menu
  */
 public class CainsLeftEye extends AbstractGameScreen {
-    public CainsLeftEye(Cain manager, EnumMap<RenderStates, Grid> grids) {
-        super(manager, grids);
+    public CainsLeftEye(Cain manager, Grid grid) {
+        super(manager, grid);
     }
 
     @Override
