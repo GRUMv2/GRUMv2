@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import grymV2.game.Adam;
-import grymV2.game.Grid;
+import grymV2.game.grid.Grid;
 import grymV2.game.ScreenStates;
 import grymV2.game.client.input.GlobalInputListener;
 
@@ -28,11 +28,14 @@ public class Cain {
         this.game = game;
         this.grid = grid;
         this.input = new GlobalInputListener();
+    }
+
+    public void create() {
         this.viewport = new FitViewport((float) this.grid.getX() / 2, (float) this.grid.getY() / 2);
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.fontcache = new BitmapFontCache(this.font);
-    }
+    };
 
     public void setScreen(ScreenStates screen) {
         switch (screen) {
