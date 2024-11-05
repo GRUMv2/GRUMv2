@@ -9,11 +9,12 @@ class Eve {
     private static final Logger logger = LogManager.getLogger(Eve.class);
     private Abel gameThread;
 
-    public Eve() {
+    public Eve(Adam game, Settings settings) {
         logger.debug("Creating and starting gameserver (Abel)");
 
         gameThread = new Abel(120);
         gameThread.start();
+        //client = new Cain(game);
     }
 
     public void dispose() {
