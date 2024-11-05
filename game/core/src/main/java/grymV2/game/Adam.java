@@ -10,19 +10,14 @@ public class Adam extends Game {
     private static final Logger logger = LogManager.getLogger(Adam.class);
 
     private Eve gameLoader;
+    public Settings settings;
     // private Cain client;
 
     public Adam() {
-        // Load settings of some sort, e.g. predefined viewport values
-        // log4j.DO_LOG()
+        settings = new Settings();
 
         logger.debug("Creating loader class (Eve)");
-        gameLoader = new Eve();
-
-        // gameLoader = new Eve(Settings settings);
-        // this.client = gameLoader.client
-        //      Adam.client/Adam.serverThread.server
-        //  vs  Adam.Eve.{client,server...}
+        gameLoader = new Eve(this, settings);
     }
 
     /**
