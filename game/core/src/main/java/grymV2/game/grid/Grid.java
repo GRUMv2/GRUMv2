@@ -1,14 +1,6 @@
 package grymV2.game.grid;
 
-//import grymV2.game.client.RenderStates;       // XXX: implement
-
-// XXX: placeholder RenderStates. Import from client when that's merged
-enum RenderStates {
-    BACKGROUND,
-    FOREGROUND,
-    DYNAMIC,
-    PERSONAL
-}
+import java.util.ArrayList;
 
 public class Grid {
     // If the user is defining grid sizes greater than 127 in a given direction
@@ -16,12 +8,25 @@ public class Grid {
     final private MapSizes size;
     final private byte x;
     final private byte y;
-
+    final ArrayList<ArrayList<Tile>> grid;
 
     public Grid(MapSizes size) {
         this.size = size;
         this.x = this.size.getX(); // bit redundant
         this.y = this.size.getY();
+        this.grid = gridInit(size);
+    }
+
+    private ArrayList<ArrayList<Tile>> gridInit(MapSizes size) {
+        ArrayList<ArrayList<Tile>> newGrid = new ArrayList<>(size.getX());
+        for (byte i = 0; i < size.getX(); i++) {
+            newGrid.add(new ArrayList<Tile>());
+            for (byte j = 0; j < size.getY(); j++) {
+                newGrid.get(i).add(new Tile(i, j));
+            }
+        }
+
+        return newGrid;
     }
 
     public MapSizes getSize() {
@@ -36,44 +41,23 @@ public class Grid {
         return y;
     }
 
-    public GridLayer getRenderGrid(RenderStates state) {
-        // TODO: Is it worth instantiating and passing to Cain a clone rather than the master <state>Grid?
-        // Grid stateGrid = new Grid(this.getSize());
-        // ...
+    public Tile getTile(byte x, byte y) {
+        return this.grid.get(x).get(y);
+    }
 
-        switch (state) {
-            case BACKGROUND:
-                break;
-
-            case FOREGROUND:
-                break;
-
-            case DYNAMIC:
-                break;
-
-            case PERSONAL:
-                break;
-
-            default:
-                break;
+    public Boolean isPlaceable(byte x, byte y) {
+        if (this.grid.get(x).get(y)
+                .getLayer(GridLayers.FOREGROUND)
+                .getContent() == ForegroundTileContent.AGNOSTIC) {
+            return true;
         }
-
-        // XXX: UNFINISHED
-        return new GridLayer(); // (leave me alone) XXX
+        return false;
     }
 
-    public void loadMap( /* Eve pass a thing */ ) {
-        // TODO: loadZmap
-
-        //for t in loadData; do       // TODO remember how to for loop in java
-        //    GridTile tile = map.tiles.get(Coord<t.x, t.y>)
-        //    tile.setTile(t.data)
-        //    map.updateLayers(tile)
-        //fi
+    public Boolean isEdge(byte x, byte y) {
+        if (x == 0 || y == 0 || x == this.x || y == this.y) {
+            return true;
+        }
+        return false;
     }
-
-    private void updateLayers(GridTile tile) {
-        // TODO
-    }
-
 }
