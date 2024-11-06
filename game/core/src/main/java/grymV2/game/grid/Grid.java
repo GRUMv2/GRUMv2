@@ -60,4 +60,11 @@ public class Grid {
         }
         return false;
     }
+
+    public Boolean isTile(byte x, byte y) {
+        if (x >= 0 && x <= this.x && y >= 0 && y <= this.y) {
+            return true;
+        }
+        return  false;
+    }
 }
