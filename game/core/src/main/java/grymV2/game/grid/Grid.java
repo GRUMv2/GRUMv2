@@ -2,6 +2,8 @@ package grymV2.game.grid;
 
 import java.util.ArrayList;
 
+import grymV2.game.config.MapSizes;
+
 public class Grid {
     // If the user is defining grid sizes greater than 127 in a given direction
     //  the interface is beyond unplayable already. The limit is probably ~50x28.
@@ -12,7 +14,7 @@ public class Grid {
 
     public Grid(MapSizes size) {
         this.size = size;
-        this.x = this.size.getX(); // bit redundant
+        this.x = this.size.getX();
         this.y = this.size.getY();
         this.grid = gridInit(size);
     }
