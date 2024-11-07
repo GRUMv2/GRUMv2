@@ -22,6 +22,10 @@ class Eve {
         //game.client = client;
     }
 
+    private void loadMap(Grid grid) {
+        // TODO
+    }
+
     public void dispose() {
         serverThreaded.endGame();
     }
