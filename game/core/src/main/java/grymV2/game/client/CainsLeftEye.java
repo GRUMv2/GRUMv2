@@ -1,6 +1,6 @@
 package grymV2.game.client;
 
-import grymV2.game.Grid;
+import grymV2.game.grid.Grid;
 
 /**
  * Cain's Left Eye - Main Menu

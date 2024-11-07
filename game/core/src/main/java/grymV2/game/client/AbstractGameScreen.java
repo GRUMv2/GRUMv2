@@ -2,7 +2,7 @@ package grymV2.game.client;
 
 import com.badlogic.gdx.ScreenAdapter;
 
-import grymV2.game.Grid;
+import grymV2.game.grid.Grid;
 
 public abstract class AbstractGameScreen extends ScreenAdapter {
 

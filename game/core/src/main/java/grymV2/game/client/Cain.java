@@ -31,7 +31,7 @@ public class Cain {
     }
 
     public void create() {
-        this.viewport = new FitViewport((float) this.grid.getX() / 2, (float) this.grid.getY() / 2);
+        this.viewport = new FitViewport((float) this.grid.getDimensionX() / 2, (float) this.grid.getDimensionY() / 2);
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.fontcache = new BitmapFontCache(this.font);
