@@ -3,6 +3,7 @@ package grymV2.game;
 import com.badlogic.gdx.Game;
 
 import grymV2.game.server.Abel;
+import grymV2.game.config.Settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
