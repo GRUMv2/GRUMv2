@@ -3,7 +3,8 @@ package grymV2.game.grid;
 public enum BackgroundTileContent implements TileContent {
     AGNOSTIC,
     TERRAIN,
-    WATER;
+    WATER,
+    HILL;
 
     public BackgroundTileContent getDefault() {
         return AGNOSTIC;
