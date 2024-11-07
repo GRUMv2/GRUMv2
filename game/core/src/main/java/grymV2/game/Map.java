@@ -7,19 +7,22 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import grymV2.game.grid.BackgroundTileContent;
+import grymV2.game.grid.ForegroundTileContent;
 import grymV2.game.grid.Grid;
-
-class MapException extends Exception {
-    private static final long serialVersionUID = 0l;
-    public MapException(String s) {
-        super(s);
-    }
-}
+import grymV2.game.grid.GridLayers;
 
 /**
  * Map
  */
 public class Map {
+
+    public static class MapException extends Exception {
+        private static final long serialVersionUID = 0l;
+        public MapException(String s) {
+            super(s);
+        }
+    }
 
     public static Grid genMap(MapSizes size) throws FileNotFoundException, MapException {
         Grid grid = new Grid(MapSizes.LARGE);
@@ -34,6 +37,7 @@ public class Map {
         try {
             map = loadMapFile("Map.txt");
             validateMapSize(grid, map);
+            grid = mapToGrid(grid, map);
         } catch (MapException | FileNotFoundException e) {
             throw e;
         }
@@ -41,8 +45,25 @@ public class Map {
         return grid;
     }
 
-    //private static Grid mapToGrid(Grid grid, ArrayList<ArrayList<String[]>> map) {
-    //}
+    private static Grid mapToGrid(Grid grid, ArrayList<ArrayList<String[]>> map) {
+        for (byte i = 0; i < grid.getDimensionX(); i++) {
+            for (byte j = 0; j < grid.getDimensionY(); j++) {
+                grid.getTile(i, j).getLayer(GridLayers.BACKGROUND).setContent(
+                    BackgroundTileContent.valueOf(MapTiles.Background.valueOf(
+                            map.get(i).get(j)[0]
+                        ).getTile().toString()
+                    )
+                );
+                grid.getTile(i, j).getLayer(GridLayers.FOREGROUND).setContent(
+                    ForegroundTileContent.valueOf(MapTiles.Foreground.valueOf(
+                            map.get(i).get(j)[1]
+                        ).getTile().toString()
+                    )
+                );
+            }
+        }
+        return grid;
+    }
 
     private static void validateMapSize(Grid grid, ArrayList<ArrayList<String[]>> map) throws MapException {
         if (map.size() > grid.getDimensionX() || map.get(0).size() > grid.getDimensionY()) {
