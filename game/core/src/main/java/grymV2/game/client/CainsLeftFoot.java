@@ -9,29 +9,22 @@ public class CainsLeftFoot extends AbstractGameScreen {
     public CainsLeftFoot(Cain manager, Grid grid) {
         super(manager, grid);
     }
+    @Override
+    public void input() {
+        // TODO Auto-generated method stub
+    }
 
     @Override
-    public void render_background() {
+    public void logic() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void draw() {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    public void render_foreground() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_dynamic() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_personal() {
-        // TODO Auto-generated method stub
-    }
 
     @Override
     public void dispose() {
