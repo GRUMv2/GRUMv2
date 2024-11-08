@@ -11,30 +11,19 @@ public class CainsLeftEye extends AbstractGameScreen {
     }
 
     @Override
-    public void render_background() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_foreground() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_dynamic() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_personal() {
+    public void input() {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void dispose() {
+    public void logic() {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public void draw() {
+        // TODO Auto-generated method stub
+
+    }
+
 }

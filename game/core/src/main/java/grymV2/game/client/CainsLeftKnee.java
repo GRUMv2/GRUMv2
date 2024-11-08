@@ -2,8 +2,6 @@ package grymV2.game.client;
 
 import grymV2.game.grid.Grid;
 
-import com.badlogic.gdx.utils.ScreenUtils;
-
 /**
  * Cain's Left Knee - Pause Screen
  */
@@ -13,26 +11,21 @@ public class CainsLeftKnee extends AbstractGameScreen {
     }
 
     @Override
-    public void render_background() {
-        ScreenUtils.clear(0, 0, 0, 1);;
+    public void input() {
+        // TODO Auto-generated method stub
     }
 
     @Override
-    public void render_foreground() {
+    public void logic() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void draw() {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    public void render_dynamic() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render_personal() {
-        // TODO Auto-generated method stub
-    }
 
     @Override
     public void pause() {
