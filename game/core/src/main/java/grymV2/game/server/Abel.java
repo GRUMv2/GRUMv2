@@ -2,6 +2,7 @@ package grymV2.game.server;
 
 import grymV2.game.server.EventHandler;
 import grymV2.game.server.TimeHandler;
+import grymV2.game.server.Simulation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,7 @@ public class Abel extends Thread {
     private ArrayList<Popup> currentPopups;
     private EventHandler eventHandler;
     public TimeHandler timeHandler;
+    public Simulation simulation;
     private boolean isRunning = true;
     private int sDelay;
 
@@ -20,6 +22,7 @@ public class Abel extends Thread {
         sDelay = (int)(1000 / TPS);
         eventHandler = new EventHandler();
         timeHandler = new TimeHandler();
+        simulation = new Simulation();
     }
 
     public void endGame() {
@@ -47,6 +50,7 @@ public class Abel extends Thread {
 
             // check all events
             eventHandler.tick(timeHandler.gameSeconds());
+            simulation.tick(0.0666f); // 20/300, roughly gives 20 years in 5 mins
         }
     }
 }
