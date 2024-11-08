@@ -19,4 +19,12 @@ public class PointerProcessor extends AbstractInputProcessor {
         this.handler.setScroll(amountX, amountY);
         return false;
     }
+
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return this.handler.click(button, true);
+    }
+
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return this.handler.click(button, false);
+    }
 }
