@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 
-import com.badlogic.gdx.Input.Keys;
-
 /**
- * GlobalInputHandler - Application global shortcuts
+ * MenuInputHandler
  */
-public class GlobalInputHandler extends AbstractInputHandler {
+public class MenuInputHandler extends AbstractInputHandler {
 
-    public GlobalInputHandler() {
-        super(new int[] {Keys.Q});
+    public MenuInputHandler() {
+        super(new int[] {/* KEYS */});
     }
 
     @Override
     public void handleLogic(ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks) {
-        // TODO Auto-generated method stub
-
     }
+
 }
