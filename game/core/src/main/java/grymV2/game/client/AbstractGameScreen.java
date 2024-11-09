@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -19,6 +20,7 @@ public abstract class AbstractGameScreen extends ScreenAdapter {
     private float delta;
     final SpriteBatch batch;
     final BitmapFont font;
+    final ShapeRenderer shapeRenderer;
     int ID; // TODO I can't remember what this was for
 
     public AbstractGameScreen(Cain manager, Grid grid) {
@@ -27,6 +29,7 @@ public abstract class AbstractGameScreen extends ScreenAdapter {
         this.viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
+        this.shapeRenderer = new ShapeRenderer();
         this.font.getData().setScale(this.viewport.getWorldHeight() / Gdx.graphics.getHeight());
         this.delta = 0;
     }
@@ -55,6 +58,7 @@ public abstract class AbstractGameScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         this.batch.dispose();
+        this.shapeRenderer.dispose();
         this.font.dispose();
     }
 }
