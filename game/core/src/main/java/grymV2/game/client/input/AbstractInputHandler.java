@@ -51,9 +51,10 @@ public abstract class AbstractInputHandler {
             this.leftClickPos.put(MousePositions.STARTX, this.mouseX);
             this.leftClickPos.put(MousePositions.STARTY, this.mouseY);
         } else if (!event && this.leftClicked) {
+            // XXX: don't think the end pos works
             this.leftClickPos.put(MousePositions.ENDX, this.mouseX);
             this.leftClickPos.put(MousePositions.ENDY, this.mouseY);
-            this.clickActive.put(Input.Buttons.LEFT, new EnumMap<>(leftClickPos));
+            this.clickActive.put(Input.Buttons.LEFT, new EnumMap<>(this.leftClickPos));
         }
         this.leftClicked = event;
         return true;
@@ -76,7 +77,7 @@ public abstract class AbstractInputHandler {
     }
 
     public HashMap<Integer, EnumMap<MousePositions, Integer>> getClicks() {
-        return clickActive;
+        return this.clickActive;
     }
 
     public void setCTRL(Boolean event) {
@@ -90,9 +91,7 @@ public abstract class AbstractInputHandler {
     public boolean setKey(int key, Boolean event) {
         if (this.keysActive.containsKey(key)) {
             this.keysActive.put(key, event);
-
             // XXX: Mod + Key will eat standalone Key mappings in the multiplexer here
-            // Better solution needed.
             return true;
         }
         return false;

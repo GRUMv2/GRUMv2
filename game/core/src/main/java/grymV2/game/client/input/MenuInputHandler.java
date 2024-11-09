@@ -22,7 +22,6 @@ public class MenuInputHandler extends AbstractInputHandler {
 
     @Override
     public void handleLogic(int[] mousePos, ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks) {
-        ArrayList<Integer> unhandledKeys = new ArrayList<Integer>();
         for (int keycode : keys) {
             switch (keycode) {
                 case Keys.ENTER:
@@ -30,7 +29,6 @@ public class MenuInputHandler extends AbstractInputHandler {
                     this.startGame();
                     break;
                 default:
-                    unhandledKeys.add(keycode);
                     break;
             }
         }
