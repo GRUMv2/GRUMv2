@@ -3,6 +3,8 @@ package grymV2.game.client.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 
+import grymV2.game.client.Cain;
+
 public class GlobalInputListener {
 
     private final InputMultiplexer multiplexer;
@@ -13,8 +15,8 @@ public class GlobalInputListener {
     private AbstractInputHandler globalHandler;
     private AbstractInputHandler handler;
 
-    public GlobalInputListener() {
-        this.globalHandler = new GlobalInputHandler();
+    public GlobalInputListener(Cain manager) {
+        this.globalHandler = new GlobalInputHandler(manager);
         this.handler = new NullInputHandler();
         this.multiplexer = new InputMultiplexer();
         this.globalPointerProcessor = new PointerProcessor(this.globalHandler);
@@ -39,6 +41,7 @@ public class GlobalInputListener {
     }
 
     public void handle() {
+        this.globalHandler.handle();
         this.handler.handle();
     }
 }

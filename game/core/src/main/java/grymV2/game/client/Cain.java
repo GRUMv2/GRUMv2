@@ -6,6 +6,8 @@ import grymV2.game.grid.Grid;
 import grymV2.game.ScreenStates;
 import grymV2.game.client.input.GlobalInputListener;
 import grymV2.game.client.input.MenuInputHandler;
+import grymV2.game.client.input.PauseInputHandler;
+import grymV2.game.client.input.EndInputHandler;
 
 
 
@@ -24,13 +26,17 @@ public class Cain {
     public Cain(Adam game, Grid grid) {
         this.game = game;
         this.grid = grid;
+        this.activeScreen = null;
     }
 
     public void create() {
-        this.input = new GlobalInputListener();
+        this.input = new GlobalInputListener(this);
     };
 
     public void setScreen(ScreenStates screen) {
+        if (this.activeScreen != null) {
+            this.activeScreen.dispose();
+        }
         switch (screen) {
             case MENU:
                 this.activeScreen = new CainsLeftEye(this, grid);
@@ -40,19 +46,26 @@ public class Cain {
                 break;
 
             case GAME:
+                // Cain only ever acts upon the game state supplied by Grid and Abel,
+                // and does not maintain any frame-to-frame logic, so it
+                // should not be detrimental to always create a brand new screen
+                // here despite both start and resume events being handled the same
                 this.activeScreen = new CainsLeftFoot(this, grid);
+                //this.input.setHandler(new GameInputHandler((CainsLeftFoot) this.activeScreen);
                 this.game.setScreen(this.activeScreen);
                 GameLogger.debug(Cain.class, "setScreen GAME");
                 break;
 
             case PAUSE:
                 this.activeScreen = new CainsLeftKnee(this, grid);
+                this.input.setHandler(new PauseInputHandler((CainsLeftKnee) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
                 GameLogger.debug(Cain.class, "setScreen PAUSE");
                 break;
 
             case END:
                 this.activeScreen = new CainsLeftHand(this, grid);
+                this.input.setHandler(new EndInputHandler((CainsLeftHand) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
                 GameLogger.debug(Cain.class, "setScreen END");
                 break;
@@ -66,8 +79,29 @@ public class Cain {
         this.input.handle();
     }
 
-    //protected void pause() {
-    //    this.game.setState(ScreenStates.PAUSE);
-    //}
+    public void pause() {
+        this.game.setState(ScreenStates.PAUSE);
+    }
+
+    public void startGame() {
+        this.game.setState(ScreenStates.GAME);
+    }
+
+    public void endGame() {
+        this.AmIMyBrothersKeeper();
+    }
+
+    private void AmIMyBrothersKeeper() {
+        this.game.setState(ScreenStates.END);
+    }
+
+    public void quitGame() {
+        GameLogger.debug(Cain.class, "QUIT");
+        this.game.exit();
+    }
+
+    public void resume() {
+        this.game.setState(ScreenStates.GAME);
+    }
 
 }
