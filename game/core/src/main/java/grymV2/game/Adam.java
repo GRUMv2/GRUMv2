@@ -20,11 +20,6 @@ public class Adam extends Game {
         loader = new Eve(this);
     }
 
-    /**
-     *
-     * Springsteen - Darkness on the Edge of Town, track 02
-     *
-     */
     public void create() {
         GameLogger.debug(Adam.class, "LibGDX create");
         this.client.create();
@@ -42,27 +37,28 @@ public class Adam extends Game {
         super.dispose();
     }
 
-    /**
-     * public void renderEvent(RenderEvent event)
-     *     case $event in
-     *         PAUSE)
-     *             this.serverThread.server.gameEvent($event)
-     *             this.client.setScreen(PAUSE)
-     *             ...
-     *             ;;
-     *         RESUME)
-     *             this.serverThread.server.gameEvent($event)
-     *             this.client.setScreen(GAME)
-     *             ...
-     *             ;;
-     *         OHSHIT)
-     *             this.serverThread.server.gameEvent(CRASH)
-     *             self.dispose()
-     *             ;;
-     *         ...
-     *         etc
-     *     esac
-     *
-     *
-     */
+    public void setState(ScreenStates state) {
+        switch (state) {
+            case MENU:
+                break;
+            case GAME:
+                serverThreaded.start();
+                break;
+            case PAUSE:
+                //serverThreaded.pause(); TODO
+                break;
+            case END:
+                serverThreaded.endGame();
+                break;
+            default:
+                break;
+        }
+        this.client.setScreen(state);
+    }
+
+    public void exit() {
+        GameLogger.debug(Adam.class, "QUIT");
+        dispose();
+        System.exit(0);
+    }
 }
