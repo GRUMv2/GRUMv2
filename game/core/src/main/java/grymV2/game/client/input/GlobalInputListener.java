@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 
 public class GlobalInputListener {
+
     private final InputMultiplexer multiplexer;
     private PointerProcessor globalPointerProcessor;
     private PointerProcessor screenPointerProcessor;
@@ -35,5 +36,9 @@ public class GlobalInputListener {
 
     public AbstractInputHandler getHandler() {
         return handler;
+    }
+
+    public void handle() {
+        this.handler.handle();
     }
 }

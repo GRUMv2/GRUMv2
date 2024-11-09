@@ -16,7 +16,7 @@ public class GlobalInputHandler extends AbstractInputHandler {
     }
 
     @Override
-    public void handleLogic(ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks) {
+    public void handleLogic(int[] mousePos, ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks) {
         // TODO Auto-generated method stub
 
     }

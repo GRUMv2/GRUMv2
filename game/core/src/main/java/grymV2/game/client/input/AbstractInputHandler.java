@@ -8,11 +8,11 @@ import java.util.Map;
 import com.badlogic.gdx.Input;
 
 /**
- * InputHandler
+ * AbstractInputHandler
  */
 public abstract class AbstractInputHandler {
-    int mouseX;
-    int mouseY;
+    private int mouseX;
+    private int mouseY;
     protected enum MousePositions { STARTX, STARTY, ENDX, ENDY };
     private EnumMap<MousePositions, Integer> leftClickPos;
     private boolean leftClicked;
@@ -29,7 +29,7 @@ public abstract class AbstractInputHandler {
         this.leftClicked = false;
         this.CTRL = false;
         for (int k : keysEnabled) {
-            keysActive.put(k, false);
+            this.keysActive.put(k, false);
         }
     }
 
@@ -38,6 +38,9 @@ public abstract class AbstractInputHandler {
         this.mouseY = mouseY;
     }
 
+    public int[] getMousePos() {
+        return new int[]{this.mouseX, this.mouseY};
+    }
 
     public void setScroll(float scrollX, float scrollY) {
         // not implemented
@@ -85,8 +88,9 @@ public abstract class AbstractInputHandler {
     }
 
     public boolean setKey(int key, Boolean event) {
-        if (keysActive.containsKey(key)) {
-            keysActive.put(key, event);
+        if (this.keysActive.containsKey(key)) {
+            this.keysActive.put(key, event);
+
             // XXX: Mod + Key will eat standalone Key mappings in the multiplexer here
             // Better solution needed.
             return true;
@@ -107,13 +111,13 @@ public abstract class AbstractInputHandler {
 
     public void handle() {
         // Get mouse/key events for current frame, hand over to subclass specific implementation, then reset them
-        handleLogic(this.getKeys(), this.getClicks());
+        handleLogic(this.getMousePos(), this.getKeys(), this.getClicks());
         for (int k : keysActive.keySet()) {
             keysActive.put(k, false);
         }
         this.clickActive = new HashMap<Integer, EnumMap<MousePositions, Integer>>();
     }
 
-    abstract public void handleLogic(ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks);
+    abstract public void handleLogic(int[] mousePos, ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks);
 
 }
