@@ -3,24 +3,20 @@ package grymV2.game;
 import com.badlogic.gdx.Game;
 
 import grymV2.game.server.Abel;
+import grymV2.game.client.Cain;
 import grymV2.game.config.Settings;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Adam extends Game {
-    private static final Logger logger = LogManager.getLogger(Adam.class);
 
     private Eve loader;
     public Settings settings;
-    //protected Cain client;
+    protected Cain client;
     protected Abel serverThreaded;
 
     public Adam() {
         settings = new Settings();
-
-        logger.debug("Creating loader class (Eve)");
+        GameLogger.debug(Adam.class, "Creating loader class (Eve)");
         loader = new Eve(this);
     }
 
@@ -30,10 +26,9 @@ public class Adam extends Game {
      *
      */
     public void create() {
-        logger.debug("LibGDX create");
-
-        // try pass everything to Cain; Adam's libGDX is just a puppet wrapper
-        // this.client.create();
+        GameLogger.debug(Adam.class, "LibGDX create");
+        this.client.create();
+        this.client.setScreen(ScreenStates.MENU);
     }
 
     public void render() {
@@ -42,7 +37,7 @@ public class Adam extends Game {
 
     @Override
     public void dispose() {
-        logger.debug("LibGDX dispose");
+        GameLogger.debug(Adam.class, "LibGDX dispose");
         this.loader.dispose();
         super.dispose();
     }
