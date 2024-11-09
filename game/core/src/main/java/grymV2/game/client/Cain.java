@@ -1,14 +1,13 @@
 package grymV2.game.client;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
 import grymV2.game.Adam;
+import grymV2.game.GameLogger;
 import grymV2.game.grid.Grid;
 import grymV2.game.ScreenStates;
 import grymV2.game.client.input.GlobalInputListener;
+import grymV2.game.client.input.MenuInputHandler;
+
+
 
 /**
  *
@@ -18,41 +17,44 @@ import grymV2.game.client.input.GlobalInputListener;
 public class Cain {
     final Adam game;
     final Grid grid;
-    final GlobalInputListener input;
-    protected SpriteBatch batch;
-    protected BitmapFont font;
-    protected BitmapFontCache fontcache;
-    protected FitViewport viewport;
+    private GlobalInputListener input;
+
+    private AbstractGameScreen activeScreen;
 
     public Cain(Adam game, Grid grid) {
         this.game = game;
         this.grid = grid;
-        this.input = new GlobalInputListener();
     }
 
     public void create() {
-        this.viewport = new FitViewport((float) this.grid.getDimensionX() / 2, (float) this.grid.getDimensionY() / 2);
-        this.batch = new SpriteBatch();
-        this.font = new BitmapFont();
-        this.fontcache = new BitmapFontCache(this.font);
+        this.input = new GlobalInputListener();
     };
 
     public void setScreen(ScreenStates screen) {
         switch (screen) {
             case MENU:
-                this.game.setScreen(new CainsLeftEye(this, grid));
+                this.activeScreen = new CainsLeftEye(this, grid);
+                this.input.setHandler(new MenuInputHandler((CainsLeftEye) this.activeScreen));
+                this.game.setScreen(this.activeScreen);
+                GameLogger.debug(Cain.class, "setScreen MENU");
                 break;
 
             case GAME:
-                this.game.setScreen(new CainsLeftFoot(this, grid));
+                this.activeScreen = new CainsLeftFoot(this, grid);
+                this.game.setScreen(this.activeScreen);
+                GameLogger.debug(Cain.class, "setScreen GAME");
                 break;
 
             case PAUSE:
-                this.game.setScreen(new CainsLeftKnee(this, grid));
+                this.activeScreen = new CainsLeftKnee(this, grid);
+                this.game.setScreen(this.activeScreen);
+                GameLogger.debug(Cain.class, "setScreen PAUSE");
                 break;
 
             case END:
-                this.game.setScreen(new CainsLeftHand(this, grid));
+                this.activeScreen = new CainsLeftHand(this, grid);
+                this.game.setScreen(this.activeScreen);
+                GameLogger.debug(Cain.class, "setScreen END");
                 break;
 
             default:
@@ -60,8 +62,12 @@ public class Cain {
         }
     }
 
-    protected void pause() {
-        this.game.setState(ScreenStates.PAUSE);
+    public void handleInput() {
+        this.input.handle();
     }
+
+    //protected void pause() {
+    //    this.game.setState(ScreenStates.PAUSE);
+    //}
 
 }
