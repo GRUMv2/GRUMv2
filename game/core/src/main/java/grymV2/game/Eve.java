@@ -11,7 +11,7 @@ class Eve {
     private Cain client;
 
     public Eve(Adam game) {
-        GameLogger.debug(Eve.class, "Creating and starting gameserver (Abel)");
+        GameLogger.debug(Eve.class, "Creating gameserver (Abel)");
 
         Grid grid = new Grid(game.settings.getGameSize());
         try {
@@ -22,7 +22,6 @@ class Eve {
         }
 
         serverThreaded = new Abel(120 /* , grid */);
-        serverThreaded.start();
         game.serverThreaded = serverThreaded;
         client = new Cain(game, grid);
         game.client = client;
