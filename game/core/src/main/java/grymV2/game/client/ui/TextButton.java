@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 /**
  * TextButton
  */
-public class TextButton extends TextMenuShape {
+public class TextButton extends TextMenuShape implements Button {
 
     private Color altColor;
     private boolean active;
@@ -55,14 +55,4 @@ public class TextButton extends TextMenuShape {
     public void setAltColor(Color altColor) {
         this.altColor = altColor;
     }
-
-    private boolean contains(float x, float y) {
-        if ((x >= this.getX() && x <= getWidth()) || (y >= this.getY() && y <= getHeight())) {
-            return true;
-        }
-        return false;
-    }
-
-
-
 }
