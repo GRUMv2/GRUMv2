@@ -1,5 +1,7 @@
 package grymV2.game.client;
 
+import com.badlogic.gdx.ScreenAdapter;
+
 import grymV2.game.Adam;
 import grymV2.game.GameLogger;
 import grymV2.game.grid.Grid;
@@ -8,8 +10,7 @@ import grymV2.game.client.input.GlobalInputListener;
 import grymV2.game.client.input.MenuInputHandler;
 import grymV2.game.client.input.PauseInputHandler;
 import grymV2.game.client.input.EndInputHandler;
-
-
+import grymV2.game.client.input.GameInputHandler;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Cain {
     final Grid grid;
     private GlobalInputListener input;
 
-    private AbstractGameScreen activeScreen;
+    private ScreenAdapter activeScreen;
 
     public Cain(Adam game, Grid grid) {
         this.game = game;
@@ -51,7 +52,7 @@ public class Cain {
                 // should not be detrimental to always create a brand new screen
                 // here despite both start and resume events being handled the same
                 this.activeScreen = new CainsLeftFoot(this, grid);
-                //this.input.setHandler(new GameInputHandler((CainsLeftFoot) this.activeScreen);
+                this.input.setHandler(new GameInputHandler((CainsLeftFoot) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
                 GameLogger.debug(Cain.class, "setScreen GAME");
                 break;
@@ -103,5 +104,4 @@ public class Cain {
     public void resume() {
         this.game.setState(ScreenStates.GAME);
     }
-
 }

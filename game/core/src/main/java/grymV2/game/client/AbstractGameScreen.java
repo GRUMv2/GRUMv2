@@ -44,7 +44,7 @@ public abstract class AbstractGameScreen extends ScreenAdapter {
     }
 
     abstract public void input();
-    abstract public void logic();
+    abstract public void logic(); // Not actually used.
     abstract public void draw();
 
     public float getDelta() {
