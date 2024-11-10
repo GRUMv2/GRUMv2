@@ -30,6 +30,7 @@ public abstract class AbstractGameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.shapeRenderer = new ShapeRenderer();
+        this.font.setUseIntegerPositions(false);
         this.font.getData().setScale(this.viewport.getWorldHeight() / Gdx.graphics.getHeight());
         this.delta = 0;
     }
