@@ -42,7 +42,11 @@ public class Adam extends Game {
             case MENU:
                 break;
             case GAME:
-                serverThreaded.start();
+                if (serverThreaded.isAlive()) {
+                    //serverThreaded.resume(); TODO
+                } else {
+                    serverThreaded.start();
+                }
                 break;
             case PAUSE:
                 //serverThreaded.pause(); TODO
