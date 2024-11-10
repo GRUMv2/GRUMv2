@@ -44,8 +44,8 @@ public class Layout<T extends UIElement> implements UIElement {
 
     private void setDimensions() {
         int itemsX = this.shapes.size();
-        float spaceX = (this.getWidth() * 0.15f) / (itemsX + 1);
-        float itemWidth = (this.getWidth() * 0.85f) / itemsX;
+        float spaceX = (this.getWidth() * 0.1f) / (itemsX + 1);
+        float itemWidth = (this.getWidth() * 0.9f) / itemsX;
         int jsize;
         int itemsY = 0;
         for (int i = 0; i < itemsX; i++) {
@@ -60,47 +60,74 @@ public class Layout<T extends UIElement> implements UIElement {
         float offsetY = this.getY() + spacingY;
         T shape;
         for (int i = 0; i < itemsX; i++) {
-            for (int j = 0; j < itemsY; j++) {
+            jsize = this.shapes.get(i).size();
+            for (int j = 0; j < jsize; j++) {
                 shape = this.shapes.get(i).get(j);
-                shape.setX(offsetX);
-                shape.setY(offsetY);
-                shape.setWidth(itemWidth);
-                shape.setHeight(itemHeight);
+                if (shape != null) {
+                    shape.setX(offsetX);
+                    shape.setY(offsetY);
+                    shape.setWidth(itemWidth);
+                    shape.setHeight(itemHeight);
+                }
                 offsetY += itemHeight + spacingY;
             }
             offsetX += itemWidth + spaceX;
+            offsetY = this.getY() + spacingY;
         }
     }
 
     public void draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera) {
+        setDimensions();
         for (int i = 0; i < shapes.size(); i++) {
             ArrayList<T> shapesColumn = shapes.get(i);
             for (int j = 0; j < shapesColumn.size(); j++) {
-                shapesColumn.get(j).draw(shapeRenderer, batch, camera);
+                T shape = shapesColumn.get(j);
+                if (shape != null) {
+                    shape.draw(shapeRenderer, batch, camera);
+                }
             }
         }
+        //System.exit(1);
     }
 
     private void put(T shape, Positions pos) {
         int i = this.li;
         int j = this.lj;
         switch (pos) {
-            case BELOW: j++; break;
-            case ABOVE: j--; break;
+            case BELOW: j--; break;
+            case ABOVE: j++; break;
             case RIGHT: i++; break;
             case LEFT: i--; break;
             default: break;
         }
         if (i < 0) {
+            if (this.shapes.get(0).size() > 0) {
+                this.shapes.add(0, new ArrayList<T>());
+            }
             i = 0;
         } else if (i > shapes.size()) {
             this.shapes.add(new ArrayList<T>());
         }
-        if (j < 0) {
+        int jsize = this.shapes.get(i).size();
+        if (j < 1) {
             j = 0;
+            if (jsize > 0 && this.shapes.get(i).get(j) == null) {
+                this.shapes.get(i).set(j, shape);
+            } else {
+                this.shapes.get(i).add(j, shape);
+            }
+        } else if (jsize - 1 < j) {
+            for (int n = jsize; n < j; n++) {
+                this.shapes.get(i).add(n, null);
+            }
+            this.shapes.get(i).add(j, shape);
+        } else {
+            this.shapes.get(i).set(j, shape);
         }
-        this.shapes.get(i).add(j, shape);
+
         setDimensions();
+        this.li = i;
+        this.lj = j;
     }
 
 
