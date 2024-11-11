@@ -12,11 +12,12 @@ import java.util.ArrayList;
 public class Abel extends Thread {
     private static final Logger logger = LogManager.getLogger(Abel.class);
     private ArrayList<Popup> currentPopups;
-    private EventHandler eventHandler;
-    public TimeHandler timeHandler;
+    private final EventHandler eventHandler;
+    public TimeHandler timeHandler;  // need to write getters for
     public Simulation simulation;
     private boolean isRunning = true;
     private int sDelay;
+    private boolean isSkippingUpdates = true;
 
     public Abel(int TPS) {
         sDelay = (int)(1000 / TPS);
@@ -48,9 +49,35 @@ public class Abel extends Thread {
             // Verry verbose
             // logger.debug("Server tick" + timeHandler.gameSecondsRemaining());
 
+            if (isSkippingUpdates) {
+                continue;
+            }
+
             // check all events
             eventHandler.tick(timeHandler.gameSeconds());
             simulation.tick(0.0666f); // 20/300, roughly gives 20 years in 5 mins
         }
+    }
+
+    public void startGame() {
+        timeHandler.startGame();
+        isSkippingUpdates = false;
+    }
+
+    public void pause() {
+        isSkippingUpdates = true;
+        // Stop ticking the event handler and the simulator. this will completely stop
+        // the server starting any new events or updating any existing ones.
+        timeHandler.pause();
+        // Get the time handler to stop
+    }
+
+    public boolean isPaused() {
+        return isSkippingUpdates;
+    }
+
+    public void unpause() {
+        isSkippingUpdates = false;
+        timeHandler.unpause();
     }
 }
