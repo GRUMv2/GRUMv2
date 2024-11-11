@@ -33,9 +33,10 @@ public class ImageButton extends ImageMenuShape implements Button {
         shape.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         shape.end();
         batch.setProjectionMatrix(camera.combined);
+        batch.begin();
         this.getSprite().setCenterX(this.getX() + (this.getWidth() / 2));
         this.getSprite().setCenterY(this.getY() + (this.getHeight() / 2));
-
+        batch.end();
     }
 
     @Override
