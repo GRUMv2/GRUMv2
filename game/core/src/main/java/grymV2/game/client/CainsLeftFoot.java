@@ -9,6 +9,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -26,6 +27,8 @@ import grymV2.game.config.WorldEnabled;
 import grymV2.game.GameLogger;
 import grymV2.game.client.ui.ImageButton;
 import grymV2.game.grid.Grid;
+import grymV2.game.grid.GridLayers;
+import grymV2.game.world.GameObject;
 
 
 /**
@@ -42,8 +45,8 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
     // game screens the below is obviously not a scalable way of doing it.
     //
 
-    final private int VIEWPORT_HEIGHT = 40;
-    final private int GAME_VIEWPORT_WIDTH = 40;
+    final private int VIEWPORT_HEIGHT;
+    final private int GAME_VIEWPORT_WIDTH;
     final private int UI_VIEWPORT_WIDTH;
     final private float UI_RATIO;
     final private float GAME_RATIO;
@@ -52,6 +55,7 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
     final Grid grid;
 
     private float delta;
+    private float time;
 
     // These viewports are FitViewport purely because it was
     // the text yanked from AGS but the custom resize function
@@ -60,6 +64,7 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
     // and override its scaling methods therein.
 
     final private OrthographicCamera masterCamera;
+    final private AssetManager assetManager;
 
     final private FitViewport uiViewport;
     final private SpriteBatch uiBatch;
@@ -74,20 +79,22 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
 
     private Layout<Layout<? extends MenuShape>> masterBox;
     private Layout<TextBox> stats;
-    private Layout<ImageButton> placeables; // TODO
-    //private Layout<TextButton> placeables; // XXX: PLACEHOLDER
+    private Layout<ImageButton> placeables;
     private Layout<TextBox> info;
-    private ArrayList<ImageButton> buttons; // TODO
-    //private ArrayList<TextButton> buttons; // XXX: PLACEHOLDER
+    private ArrayList<ImageButton> buttons;
     private TextBox statsBox;
     private TextBox infoBox;
+    private ImageButton selected;
 
     public CainsLeftFoot(Cain manager, Grid grid) {
         this.masterCamera = new OrthographicCamera();
         this.masterCamera.setToOrtho(false, 1920, 1080);
+        this.assetManager = new AssetManager();
         this.manager = manager;
         this.grid = grid;
 
+        this.GAME_VIEWPORT_WIDTH = this.grid.getDimensionX();
+        this.VIEWPORT_HEIGHT = this.grid.getDimensionY();
         this.UI_RATIO = manager.game.settings.getUIRatio();
         this.GAME_RATIO = 1 - this.UI_RATIO;
         this.UI_VIEWPORT_WIDTH = Math.round(this.GAME_VIEWPORT_WIDTH * (this.UI_RATIO / this.GAME_RATIO)); // For now
@@ -127,6 +134,7 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
         this.stats = new Layout<TextBox>(viewport);
         this.info = new Layout<TextBox>(viewport);
         this.placeables = new Layout<ImageButton>(viewport);
+        this.buttons = new ArrayList<ImageButton>();
         ImageButton button;
         WorldEnabled.Building[] WEBv = WorldEnabled.Building.values();
         Vector2 layoutSize = howLongIsAPieceOfVector2(WEBv.length);
@@ -141,6 +149,8 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
                     break;
                 }
                 button = new ImageButton(new Texture(TextureMap.valueOf(WEBv[pointer].toString()).getTexture()));
+                //button.setColor(this.manager.game.settings.getUIForeground());
+                this.buttons.add(button);
                 if (j == 0) {
                     this.placeables.left(button);
                 } else {
@@ -150,7 +160,7 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
         }
 
         this.statsBox = new TextBox(this.uiFont);
-        this.statsBox.setText("These are some stats.\n\nMuch stats.\n\nMany number.\n\nWow."); // TODO
+        this.statsBox.setText("");
         this.stats.add(this.statsBox);
 
         infoBox = new TextBox(this.uiFont);
@@ -173,9 +183,9 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
     }
 
     public void render(float delta) {
-        GameLogger.debug(CainsLeftFoot.class, "Ren");
+        //GameLogger.debug(CainsLeftFoot.class, "Ren");
         this.delta = delta;
-        ScreenUtils.clear(this.manager.game.settings.getUIBackground());
+        ScreenUtils.clear(this.manager.game.settings.getUIForeground());
         input();
         logic();
         draw();
@@ -185,13 +195,25 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
         this.manager.handleInput();
     }
 
+    public FitViewport getGameViewport() {
+        return gameViewport;
+    }
+
+    public FitViewport getUiViewport() {
+        return uiViewport;
+    }
+
     public void logic() {
+        this.time = this.manager.game.getTimer();
+        if (this.time > 300 /* 5min */) {
+            this.endGame();
+        }
     }
 
     public void draw() {
-        GameLogger.debug(CainsLeftFoot.class, "GAM");
+        //GameLogger.debug(CainsLeftFoot.class, "GAM");
         doGAM();
-        GameLogger.debug(CainsLeftFoot.class, "UI");
+        //GameLogger.debug(CainsLeftFoot.class, "UI");
         doUI();
     }
 
@@ -201,15 +223,41 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
         this.gameShapeRenderer.begin(ShapeType.Filled);
         this.gameShapeRenderer.rect(0, 0, this.gameViewport.getWorldWidth(), this.gameViewport.getWorldHeight());
         this.gameShapeRenderer.end();
+        this.gameBatch.setProjectionMatrix(this.gameViewport.getCamera().combined);
+        this.gameBatch.begin();
+        int gridSizeX = this.grid.getSize().getX();
+        int gridSizeY = this.grid.getSize().getY();
+        Sprite layerSprite;
+        GameObject layerObject;
+        for (byte i = 0; i < gridSizeX; i++) {
+            for (byte j = 0; j < gridSizeY; j++) {
+                for (GridLayers layer : GridLayers.values()) {
+                    layerObject = this.grid.getTile(i, j).getLayer(layer);
+                    if (layerObject != null) {
+                        layerSprite = this.assetManager.getSprite(layerObject.getTexture().getTexture());
+                        layerSprite.setSize(1, 1);
+                        layerSprite.setX(i);
+                        layerSprite.setY(j);
+                        layerSprite.draw(this.gameBatch);
+                    }
+                }
+            }
+        }
+        this.gameBatch.end();
     }
     private void doUI() {
         this.uiViewport.apply(true);
+        String stats = "Time: " + this.time + "\n\n";
+        //for (String s : this.manager.game.getStats()) {
+        //    stats += s + "\n";
+        //}
+        this.statsBox.setText(stats);
         this.masterBox.draw(this.uiShapeRenderer, this.uiBatch, this.uiViewport.getCamera());
     }
 
     @Override
     public void resize(int width, int height) {
-        GameLogger.debug(CainsLeftFoot.class, "RESY");
+        //GameLogger.debug(CainsLeftFoot.class, "RESY");
         int endpoint = resizeViewport(this.uiViewport, this.UI_RATIO, 0, width, height);
         resizeViewport(this.gameViewport, this.GAME_RATIO, endpoint, width, height);
         this.uiViewport.apply(true);
@@ -237,5 +285,9 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
     @Override
     public void pause() {
         this.manager.pause();
+    }
+
+    public void endGame() {
+        this.manager.endGame();
     }
 }
