@@ -6,11 +6,11 @@ import java.util.Iterator;
 import grymV2.game.Adam;
 import grymV2.game.server.Event;
 import grymV2.game.server.events.RishiSunak;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 class EventHandler {
-    private static final Logger logger = LogManager.getLogger(EventHandler.class);
+    //private static final Logger logger = LogManager.getLogger(EventHandler.class);
 
     private ArrayList<Event> eventQueue;
     private ArrayList<Event> eventPool;
@@ -28,7 +28,7 @@ class EventHandler {
             if (e.getStartTime() <= time) {
                 eventPool.add(e);
                 addIterator.remove();
-                logger.info("Moved event " + e.getClass().getName() + " to the pool (starttime)");
+                //logger.info("Moved event " + e.getClass().getName() + " to the pool (starttime)");
             }
         }
 
@@ -41,18 +41,18 @@ class EventHandler {
             // remove event if it returns false
             if (!result) {
                 removeIterator.remove();
-                logger.info("Removed event " + e.getClass().getName() + " from the pool (returned false)");
+                //logger.info("Removed event " + e.getClass().getName() + " from the pool (returned false)");
             }
         }
     }
 
     public EventHandler() {
-        logger.info("Setting up event queue");
+        //logger.info("Setting up event queue");
         eventQueue = new ArrayList<>();
         eventPool = new ArrayList<>();
 
         // Add all events
         eventQueue.add(new RishiSunak());
-        logger.info("Event queue created");
+        //logger.info("Event queue created");
     }
 }

@@ -11,13 +11,13 @@ class Eve {
     private Cain client;
 
     public Eve(Adam game) {
-        GameLogger.debug(Eve.class, "Creating gameserver (Abel)");
+        //GameLogger.debug(Eve.class, "Creating gameserver (Abel)");
 
         Grid grid = new Grid(game.settings.getGameSize());
         try {
             grid = Map.genMap(grid.getSize());
         } catch (FileNotFoundException | Map.MapException e) {
-            GameLogger.error(Eve.class, "Cannot load map: " + e.toString());
+            //GameLogger.error(Eve.class, "Cannot load map: " + e.toString());
             System.exit(2);
         }
 

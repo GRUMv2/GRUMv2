@@ -22,12 +22,12 @@ public class Adam extends Game {
 
     public Adam() {
         settings = new Settings();
-        GameLogger.debug(Adam.class, "Creating loader class (Eve)");
+        //GameLogger.debug(Adam.class, "Creating loader class (Eve)");
         loader = new Eve(this);
     }
 
     public void create() {
-        GameLogger.debug(Adam.class, "LibGDX create");
+        //GameLogger.debug(Adam.class, "LibGDX create");
         this.client.create();
         this.client.setScreen(ScreenStates.MENU);
     }
@@ -38,7 +38,7 @@ public class Adam extends Game {
 
     @Override
     public void dispose() {
-        GameLogger.debug(Adam.class, "LibGDX dispose");
+        //GameLogger.debug(Adam.class, "LibGDX dispose");
         this.loader.dispose();
         super.dispose();
     }
@@ -89,7 +89,7 @@ public class Adam extends Game {
     }
 
     public void exit() {
-        GameLogger.debug(Adam.class, "QUIT");
+        //GameLogger.debug(Adam.class, "QUIT");
         dispose();
         System.exit(0);
     }

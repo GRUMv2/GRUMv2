@@ -3,7 +3,7 @@ package grymV2.game.client;
 import com.badlogic.gdx.ScreenAdapter;
 
 import grymV2.game.Adam;
-import grymV2.game.GameLogger;
+//import grymV2.game.GameLogger;
 import grymV2.game.grid.Grid;
 import grymV2.game.ScreenStates;
 import grymV2.game.client.input.GlobalInputListener;
@@ -43,7 +43,7 @@ public class Cain {
                 this.activeScreen = new CainsLeftEye(this, grid);
                 this.input.setHandler(new MenuInputHandler((CainsLeftEye) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
-                GameLogger.debug(Cain.class, "setScreen MENU");
+                //GameLogger.debug(Cain.class, "setScreen MENU");
                 break;
 
             case GAME:
@@ -54,21 +54,21 @@ public class Cain {
                 this.activeScreen = new CainsLeftFoot(this, grid);
                 this.input.setHandler(new GameInputHandler((CainsLeftFoot) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
-                GameLogger.debug(Cain.class, "setScreen GAME");
+                //GameLogger.debug(Cain.class, "setScreen GAME");
                 break;
 
             case PAUSE:
                 this.activeScreen = new CainsLeftKnee(this, grid);
                 this.input.setHandler(new PauseInputHandler((CainsLeftKnee) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
-                GameLogger.debug(Cain.class, "setScreen PAUSE");
+                //GameLogger.debug(Cain.class, "setScreen PAUSE");
                 break;
 
             case END:
                 this.activeScreen = new CainsLeftHand(this, grid);
                 this.input.setHandler(new EndInputHandler((CainsLeftHand) this.activeScreen));
                 this.game.setScreen(this.activeScreen);
-                GameLogger.debug(Cain.class, "setScreen END");
+                //GameLogger.debug(Cain.class, "setScreen END");
                 break;
 
             default:
@@ -97,7 +97,7 @@ public class Cain {
     }
 
     public void quitGame() {
-        GameLogger.debug(Cain.class, "QUIT");
+        //GameLogger.debug(Cain.class, "QUIT");
         this.game.exit();
     }
 

@@ -24,7 +24,7 @@ import grymV2.game.client.ui.MenuShape;
 import grymV2.game.client.ui.TextBox;
 import grymV2.game.config.TextureMap;
 import grymV2.game.config.WorldEnabled;
-import grymV2.game.GameLogger;
+//import grymV2.game.GameLogger;
 import grymV2.game.client.ui.ImageButton;
 import grymV2.game.grid.Grid;
 import grymV2.game.grid.GridLayers;
@@ -115,12 +115,12 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
 
         this.delta = 0f;
 
-        GameLogger.debug(CainsLeftFoot.class, "Main init");
+        //GameLogger.debug(CainsLeftFoot.class, "Main init");
 
         mkUI();
-        GameLogger.debug(CainsLeftFoot.class, "UI init");
+        //GameLogger.debug(CainsLeftFoot.class, "UI init");
         mkGAM();
-        GameLogger.debug(CainsLeftFoot.class, "GAM init");
+        //GameLogger.debug(CainsLeftFoot.class, "GAM init");
     }
 
     private void mkGAM() {

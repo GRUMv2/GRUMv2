@@ -4,13 +4,13 @@ import grymV2.game.server.EventHandler;
 import grymV2.game.server.TimeHandler;
 import grymV2.game.server.Simulation;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class Abel extends Thread {
-    private static final Logger logger = LogManager.getLogger(Abel.class);
+    //private static final Logger logger = LogManager.getLogger(Abel.class);
     private ArrayList<Popup> currentPopups;
     private final EventHandler eventHandler;
     public TimeHandler timeHandler;  // need to write getters for
@@ -40,7 +40,7 @@ public class Abel extends Thread {
 
     // Entrypoint for the server thread from the loader
     public void run() {
-        logger.info("GameServer running");
+        //logger.info("GameServer running");
 
         while (isRunning) {
             // maintain server TPS
