@@ -9,6 +9,7 @@ public class KeyProcessor extends AbstractInputProcessor {
     }
 
     public boolean keyDown(int keycode) {
+        System.out.println("down");
         return this.getHandler().setKey(keycode, true);
     }
 

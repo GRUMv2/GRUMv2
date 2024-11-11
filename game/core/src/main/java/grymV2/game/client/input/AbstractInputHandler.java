@@ -13,7 +13,7 @@ import com.badlogic.gdx.Input;
 public abstract class AbstractInputHandler {
     private int mouseX;
     private int mouseY;
-    protected enum MousePositions { STARTX, STARTY, ENDX, ENDY };
+    public enum MousePositions { STARTX, STARTY, ENDX, ENDY };
     private EnumMap<MousePositions, Integer> leftClickPos;
     private boolean leftClicked;
     private boolean CTRL;
@@ -90,8 +90,12 @@ public abstract class AbstractInputHandler {
     }
 
     public boolean setKey(int key, Boolean event) {
+        System.out.println();
+
+        this.keysActive.put(key, event);
+
         if (this.keysActive.containsKey(key)) {
-            this.keysActive.put(key, event);
+
             // XXX: Mod + Key will eat standalone Key mappings in the multiplexer here
             return true;
         }

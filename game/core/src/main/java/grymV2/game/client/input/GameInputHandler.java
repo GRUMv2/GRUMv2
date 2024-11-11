@@ -24,16 +24,17 @@ public class GameInputHandler extends AbstractInputHandler {
     @Override
     public void handleLogic(int[] mousePos, ArrayList<Integer> keys, HashMap<Integer, EnumMap<MousePositions, Integer>> clicks) {
         for (int keycode : keys) {
+            System.out.println(keycode);
             switch (keycode) {
                 case Keys.ESCAPE:
                     this.pause();
                     break;
-                case Keys.NUM_1:
-                    break;
                 default:
+                    this.screen.handleLogic(mousePos, keys, clicks);
                     break;
             }
         }
+
     }
 
     public void pause() {

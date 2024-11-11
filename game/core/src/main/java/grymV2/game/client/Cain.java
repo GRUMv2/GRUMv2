@@ -35,9 +35,6 @@ public class Cain {
     };
 
     public void setScreen(ScreenStates screen) {
-        if (this.activeScreen != null) {
-            this.activeScreen.dispose();
-        }
         switch (screen) {
             case MENU:
                 this.activeScreen = new CainsLeftEye(this, grid);
@@ -86,6 +83,7 @@ public class Cain {
 
     public void startGame() {
         this.game.setState(ScreenStates.GAME);
+        this.game.serverThreaded.startGame();
     }
 
     public void endGame() {

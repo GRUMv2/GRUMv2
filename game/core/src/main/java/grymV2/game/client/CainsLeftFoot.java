@@ -3,8 +3,11 @@ package grymV2.game.client;
 // TODO s/GAM/Game/g
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,6 +22,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import grymV2.game.client.input.AbstractInputHandler;
 import grymV2.game.client.ui.Layout;
 import grymV2.game.client.ui.MenuShape;
 import grymV2.game.client.ui.TextBox;
@@ -289,5 +293,17 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
 
     public void endGame() {
         this.manager.endGame();
+    }
+
+    public void handleLogic(int[] mousePos, ArrayList<Integer> keys, HashMap<Integer, EnumMap<AbstractInputHandler.MousePositions, Integer>> clicks) {
+        for (int keycode : keys) {
+            switch (keycode) {
+                case Input.Keys.P:
+                    this.pause();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

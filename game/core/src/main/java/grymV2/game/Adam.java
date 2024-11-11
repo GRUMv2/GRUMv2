@@ -15,7 +15,7 @@ public class Adam extends Game {
     private Eve loader;
     public Settings settings;
     protected Cain client;
-    protected Abel serverThreaded;
+    public Abel serverThreaded;
 
     private float hackTimer = 0;
     private float hackTimerLast = 0;
@@ -50,8 +50,6 @@ public class Adam extends Game {
             case GAME:
                 if (serverThreaded.isPaused()) {
                     serverThreaded.unpause();
-                } else {
-                    serverThreaded.startGame();
                 }
                 break;
             case PAUSE:
