@@ -74,6 +74,8 @@ public class Map {
                     case "R":
                         f = new Road(TextureMap.ROAD_STRAIGHT);
                         break;
+                    case "E": // Empty foreground
+                        continue;
                     default:
                         throw new MapException("Invalid map (context: Foreground tile '" + map.get(i).get(j)[1] + "')");
                 }
