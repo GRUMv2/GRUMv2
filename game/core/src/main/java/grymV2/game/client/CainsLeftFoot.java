@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -21,7 +21,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import grymV2.game.client.ui.Layout;
 import grymV2.game.client.ui.MenuShape;
 import grymV2.game.client.ui.TextBox;
-import grymV2.game.client.ui.TextButton;
+import grymV2.game.config.TextureMap;
+import grymV2.game.config.WorldEnabled;
 import grymV2.game.GameLogger;
 import grymV2.game.client.ui.ImageButton;
 import grymV2.game.grid.Grid;
@@ -73,11 +74,11 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
 
     private Layout<Layout<? extends MenuShape>> masterBox;
     private Layout<TextBox> stats;
-    //private Layout<ImageButton> placeables; // TODO
-    private Layout<TextButton> placeables; // XXX: PLACEHOLDER
+    private Layout<ImageButton> placeables; // TODO
+    //private Layout<TextButton> placeables; // XXX: PLACEHOLDER
     private Layout<TextBox> info;
-    //private ArrayList<ImageButton> buttons; // TODO
-    private ArrayList<TextButton> buttons; // XXX: PLACEHOLDER
+    private ArrayList<ImageButton> buttons; // TODO
+    //private ArrayList<TextButton> buttons; // XXX: PLACEHOLDER
     private TextBox statsBox;
     private TextBox infoBox;
 
@@ -125,21 +126,10 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
         this.masterBox.centreLayout(viewport);
         this.stats = new Layout<TextBox>(viewport);
         this.info = new Layout<TextBox>(viewport);
-        //this.placeables = new Layout<ImageButton>(viewport); TODO
-        //ImageButton button;
-        //for (get all enabled building types); do
-        //    make ImageButton for building type
-        //    put ImageButton into this.placeables
-        //done
-
-        /*
-         * XXX: START PLACEHOLDER
-         */
-        this.placeables = new Layout<TextButton>(viewport);
-        TextButton button;
-        String[] fs = new String[]{ "AAAAAAAAA", "BBBBBBBBB", "CCCCCCCC", "Kenneth", "DDDDDDDD", "EEEEEEEEE", "FFFFFFFF", "GGGGGGGG", "hhhhhhhh", "i" };
-        int nButton = fs.length;
-        Vector2 layoutSize = howLongIsAPieceOfVector2(nButton);
+        this.placeables = new Layout<ImageButton>(viewport);
+        ImageButton button;
+        WorldEnabled.Building[] WEBv = WorldEnabled.Building.values();
+        Vector2 layoutSize = howLongIsAPieceOfVector2(WEBv.length);
         int pointer = -1;
         for (int i = 0; i < layoutSize.x; i++) {
             for (int j = 0; j < layoutSize.y; j++) {
@@ -147,12 +137,10 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
                 // layoutSize is the ideal button layout dimension
                 // Verify index exists in array in case there are less entries
                 // than needed to fill the grid (probable)
-                if (pointer >= nButton) {
+                if (pointer >= WEBv.length) {
                     break;
                 }
-                button = new TextButton(this.uiFont);
-                button.setText(fs[pointer]);
-                button.setTextColor(this.manager.game.settings.getUIForeground());
+                button = new ImageButton(new Texture(TextureMap.valueOf(WEBv[pointer].toString()).getTexture()));
                 if (j == 0) {
                     this.placeables.left(button);
                 } else {
@@ -160,11 +148,6 @@ public class CainsLeftFoot extends /* NOT AGS */ ScreenAdapter {
                 }
             }
         }
-        /*
-         *
-         * XXX: END PLACEHOLDER
-         *
-         */
 
         this.statsBox = new TextBox(this.uiFont);
         this.statsBox.setText("These are some stats.\n\nMuch stats.\n\nMany number.\n\nWow."); // TODO
