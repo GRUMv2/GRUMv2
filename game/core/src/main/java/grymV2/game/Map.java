@@ -1,16 +1,21 @@
 package grymV2.game;
 
 import grymV2.game.config.MapSizes;
+import grymV2.game.config.TextureMap;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import grymV2.game.grid.BackgroundTileContent;
-import grymV2.game.grid.ForegroundTileContent;
 import grymV2.game.grid.Grid;
 import grymV2.game.grid.GridLayers;
+import grymV2.game.world.BackgroundGameObject;
+import grymV2.game.world.ForegroundGameObject;
+import grymV2.game.world.Lake;
+import grymV2.game.world.River;
+import grymV2.game.world.Road;
+import grymV2.game.world.Terrain;
 
 /**
  * Map
@@ -45,21 +50,34 @@ public class Map {
         return grid;
     }
 
-    private static Grid mapToGrid(Grid grid, ArrayList<ArrayList<String[]>> map) {
+    private static Grid mapToGrid(Grid grid, ArrayList<ArrayList<String[]>> map) throws MapException {
+        ForegroundGameObject f;
+        BackgroundGameObject b;
         for (byte i = 0; i < grid.getDimensionX(); i++) {
             for (byte j = 0; j < grid.getDimensionY(); j++) {
-                grid.getTile(i, j).getLayer(GridLayers.BACKGROUND).setContent(
-                    BackgroundTileContent.valueOf(MapTiles.Background.valueOf(
-                            map.get(i).get(j)[0]
-                        ).getTile().toString()
-                    )
-                );
-                grid.getTile(i, j).getLayer(GridLayers.FOREGROUND).setContent(
-                    ForegroundTileContent.valueOf(MapTiles.Foreground.valueOf(
-                            map.get(i).get(j)[1]
-                        ).getTile().toString()
-                    )
-                );
+                switch (map.get(i).get(j)[0]) {
+                    case "T":
+                        b = new Terrain(TextureMap.TERRAIN);
+                        break;
+                    case "L":
+                        b = new Lake(TextureMap.LAKE);
+                        break;
+                    case "R":
+                        b = new River(TextureMap.RIVER_STRAIGHT);
+                        break;
+                    default:
+                        throw new MapException("Invalid map (context: Background tile '" + map.get(i).get(j)[0] + "')");
+                }
+                grid.getTile(i, j).setLayer(GridLayers.BACKGROUND, b);
+
+                switch (map.get(i).get(j)[1]) {
+                    case "R":
+                        f = new Road(TextureMap.ROAD_STRAIGHT);
+                        break;
+                    default:
+                        throw new MapException("Invalid map (context: Foreground tile '" + map.get(i).get(j)[1] + "')");
+                }
+                grid.getTile(i, j).setLayer(GridLayers.FOREGROUND, f);
             }
         }
         return grid;
