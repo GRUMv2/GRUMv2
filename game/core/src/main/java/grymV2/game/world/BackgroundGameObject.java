@@ -5,14 +5,9 @@ import grymV2.game.config.TextureMap;
 /**
  * BackgroundGameObject
  */
-abstract public class BackgroundGameObject implements GameObject, Immutable {
-    private TextureMap texture;
+abstract public class BackgroundGameObject extends GameObject implements Immutable {
 
-    public TextureMap getTexture() {
-        return texture;
-    }
-
-    public void setTexture(TextureMap texture) {
-        this.texture = texture;
+    public BackgroundGameObject(TextureMap texture) {
+        super(texture);
     }
 }

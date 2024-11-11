@@ -16,7 +16,9 @@ public enum TextureMap {
 
     // Foreground (Buildings)
     ACCOMMODATION("accommodation.png"),
-    CANTEEN("canteen.png");
+    CANTEEN("canteen.png"),
+    SPORTSCENTRE("sportscentre.png"),
+    LECTUREHALL("lecturehall.png");
 
     private String texture;
 
