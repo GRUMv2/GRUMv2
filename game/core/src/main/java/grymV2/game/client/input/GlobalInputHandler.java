@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Input.Keys;
 
-import grymV2.game.GameLogger;
 import grymV2.game.client.Cain;
 
 /**
@@ -39,6 +38,11 @@ public class GlobalInputHandler extends AbstractInputHandler {
     @Override
     public boolean click(int button, Boolean event) {
         // Pass all click events through to screen handler
+        return false;
+    }
+
+    @Override
+    public boolean setMousePos(int mouseX, int mouseY) {
         return false;
     }
 

@@ -9,8 +9,7 @@ public class PointerProcessor extends AbstractInputProcessor {
     }
 
     public boolean mouseMoved(int screenX, int screenY) {
-        this.getHandler().setMousePos(screenX, screenY);
-        return true;
+        return this.getHandler().setMousePos(screenX, screenY);
     }
 
     public boolean scrolled(float amountX, float amountY) {

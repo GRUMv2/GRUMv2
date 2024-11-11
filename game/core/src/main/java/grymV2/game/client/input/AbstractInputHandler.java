@@ -33,9 +33,10 @@ public abstract class AbstractInputHandler {
         }
     }
 
-    public void setMousePos(int mouseX, int mouseY) {
+    public boolean setMousePos(int mouseX, int mouseY) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
+        return true;
     }
 
     public int[] getMousePos() {
