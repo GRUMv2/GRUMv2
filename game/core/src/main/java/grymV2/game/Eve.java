@@ -22,6 +22,7 @@ class Eve {
         }
 
         serverThreaded = new Abel(120 /* , grid */);
+        serverThreaded.start();
         game.serverThreaded = serverThreaded;
         client = new Cain(game, grid);
         game.client = client;

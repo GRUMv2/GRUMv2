@@ -26,6 +26,10 @@ public class Abel extends Thread {
         simulation = new Simulation();
     }
 
+    public float getTime() {
+        return this.timeHandler.gameSeconds();
+    }
+
     public void endGame() {
         this.isRunning = false;
     }

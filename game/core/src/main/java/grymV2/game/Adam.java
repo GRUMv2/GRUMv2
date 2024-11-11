@@ -1,5 +1,8 @@
 package grymV2.game;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 import com.badlogic.gdx.Game;
 
 import grymV2.game.server.Abel;
@@ -13,6 +16,9 @@ public class Adam extends Game {
     public Settings settings;
     protected Cain client;
     protected Abel serverThreaded;
+
+    private float hackTimer = 0;
+    private float hackTimerLast = 0;
 
     public Adam() {
         settings = new Settings();
@@ -42,14 +48,14 @@ public class Adam extends Game {
             case MENU:
                 break;
             case GAME:
-                if (serverThreaded.isAlive()) {
-                    //serverThreaded.resume(); TODO
+                if (serverThreaded.isPaused()) {
+                    serverThreaded.unpause();
                 } else {
-                    serverThreaded.start();
+                    serverThreaded.startGame();
                 }
                 break;
             case PAUSE:
-                //serverThreaded.pause(); TODO
+                serverThreaded.pause();
                 break;
             case END:
                 serverThreaded.endGame();
@@ -58,6 +64,28 @@ public class Adam extends Game {
                 break;
         }
         this.client.setScreen(state);
+    }
+
+    //synchronized public String[] getStats() {
+    //    return new String[] {
+    //        String.valueOf(this.serverThreaded.simulation.get_current_balance()),
+    //        String.valueOf(this.serverThreaded.simulation.get_current_income()),
+    //        String.valueOf(this.serverThreaded.simulation.get_current_income_trend()),
+    //        String.valueOf(this.serverThreaded.simulation.get_number_students_trend()),
+    //        String.valueOf(this.serverThreaded.simulation.get_student_satisfaction()),
+    //        String.valueOf(this.serverThreaded.simulation.get_student_satisfaction_trend())
+    //    };
+    //}
+
+    synchronized public float getTimer() {
+        Date date = new java.util.Date((long) (this.serverThreaded.getTime() / 1000000));
+        // Deprecated
+        float dateseconds = (date.getMinutes() * 60) + date.getSeconds();
+        if (dateseconds > this.hackTimerLast) {
+            this.hackTimerLast = dateseconds;
+            this.hackTimer++;
+        }
+        return this.hackTimer;
     }
 
     public void exit() {

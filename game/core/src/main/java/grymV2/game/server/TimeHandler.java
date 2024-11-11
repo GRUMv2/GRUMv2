@@ -1,28 +1,30 @@
 package grymV2.game.server;
 
+import com.badlogic.gdx.utils.TimeUtils;
+
 class TimeHandler {
     private long startTimeMS;
     private long pausedAtMS;
     private boolean isPaused = false;
 
     public TimeHandler() {
-        this.startTimeMS = System.currentTimeMillis();  // prevents calls to gameSeconds returning 0-long0
+        this.startTimeMS = TimeUtils.nanoTime();  // prevents calls to gameSeconds returning 0-long0
     }
 
     public void startGame() {
-        this.startTimeMS = System.currentTimeMillis();
+        this.startTimeMS = TimeUtils.nanoTime();
     }
 
     public float gameSeconds() {
         if (isPaused) {
-            return (pausedAtMS - startTimeMS) / 1000f;
+            return (pausedAtMS - startTimeMS);
         }
 
-        return (System.currentTimeMillis() - startTimeMS) / 1000f;
+        return (TimeUtils.nanoTime() - startTimeMS);
     }
 
     public void pause() {
-        pausedAtMS = System.currentTimeMillis();
+        pausedAtMS = TimeUtils.nanoTime();
         isPaused = true;
     }
 
@@ -30,7 +32,7 @@ class TimeHandler {
         isPaused = false;
 
         // we need to change the start position to correctly recalculate the time
-        long pausedForMS = System.currentTimeMillis() - pausedAtMS;
+        long pausedForMS = TimeUtils.nanoTime() - pausedAtMS;
         startTimeMS += pausedForMS;
     }
 }
