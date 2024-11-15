@@ -1,0 +1,242 @@
+@startuml
+
+package libGDX {
+    class InputMultiplexer
+    class InputAdapter
+    class ScreenAdapter
+}
+
+package Client {
+    package UIToolkit {
+	interface UIElement {
+	    + float getX()
+	    + float getY()
+	    + float getWidth()
+	    + float getHeight()
+	    + void setX(float x)
+	    + void setY(float y)
+	    + void setWidth(float width)
+	    + void setHeight(float height)
+	}
+	interface Button {
+	    + boolean hover(float x, float y)
+	    + Color getAltColor()
+	    + default void setAltColor(Color altColor)
+	}
+	class Layout <T extends UIElement> implements UIElement {
+	    - float x
+	    - float y
+	    - float width
+	    - float height
+	    - ArrayList<ArrayList<T>> shapes
+	    - int li
+	    - int lj
+	    - enum Positions
+	    - void put(T shape, Positions pos)
+	    - void setDimensions()
+	    + ArrayList<ArrayList<T>> getShapes()
+	    + void draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	    + void add(T shape)
+	    + void below(T shape)
+	    + void above(T shape)
+	    + void right(T shape)
+	    + void left(T shape)
+	    + float getX()
+	    + void setX(float x)
+	    + float getY()
+	    + void setY(float y)
+	    + float getWidth()
+	    + void setWidth(float width)
+	    + float getHeight()
+	    + void setHeight(float height)
+	    + void centreLayout(Viewport viewport)
+	    + void centreLayout(float x, float y)
+	}
+
+	abstract class MenuShape implements UIElement {
+	    - float x
+	    - float y
+	    - float width
+	    - float height
+	    - Color color
+	    + Color getColor()
+	    + void setColor()
+	    + float getX()
+	    + float getY()
+	    + void setX(float x)
+	    + void setY(float y)
+	    + float getWidth()
+	    + void setWidth(float height)
+	    + float getHeight()
+	    + void setHeight(float height)
+	    + void {abstract} draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	}
+
+	abstract class TextMenuShape extends MenuShape {
+	    - String text
+	    - float textX
+	    - float textY
+	    - Color textColor
+	    - BitmapFont font
+	    - GlyphLayout glyph
+	    + String getText()
+	    + void setText(String text)
+	    + Color getTextColor()
+	    + void setTextColor(Color color)
+	    + void centreText()
+	    + float getTextX()
+	    + float getTextY()
+	    + void setTextX(float textX)
+	    + void setTextY(float textY)
+	    + BitmapFont getFont()
+	    + GlyphLayout getGlyph()
+	    + void {abstract} draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	}
+
+	class TextBox extends TextMenuShape {
+	    + void draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	}
+
+	class TextButton extends TextMenuShape implements Button {
+	    - Color altColor
+	    - boolean active
+	    + void draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	    + boolean hover(float x, float y)
+	    + Color getAltColor()
+	    + void setAltColor(Color altColor)
+	}
+
+	abstract class ImageMenuShape extends MenuShape {
+	    - Texture texture
+	    - Sprite imgSprite
+	    + void setTexture(Texture texture)
+	    + Texture getTexture()
+	    + Sprite getSprite()
+	}
+
+	class ImageButton extends ImageMenuShape implements Button {
+	    - boolean active
+	    - Color altColor
+	    + void draw(ShapeRenderer shapeRenderer, SpriteBatch batch, Camera camera)
+	    + boolean hover(float x, float y)
+	    + Color getAltColor()
+	    + void setAltColor(Color altColor)
+	}
+
+    }
+
+    package Input {
+	class GlobalInputListener extends InputMultiplexer {
+	    - InputMultiplexer {final} multiplexer
+	    - PointerProcessor globalPointerProcessor
+	    - PointerProcessor screenPointerProcessor
+	    - KeyProcessor globalKeyProcessor
+	    - KeyProcessor screenKeyProcessor
+	    - AbstractInputHandler globalHandler
+	    - AbstractInputHandler handler
+	    + void setHandler(AbstractInputHandler handler)
+	    + AbstractInputHandler getHandler()
+	    + void handle()
+	}
+	abstract class AbstractInputHandler {
+	    - int mouseX
+	    - int mouseY
+	    # enum MousePositions
+	    - EnumMap<MousePositions, Integer> leftClickPos
+	    - boolean leftClicked
+	    - boolean CTRL
+	    ~ int[] keysEnabled
+	    - HashMap<Integer, Boolean> keysActive
+	    - HashMap<Integer, EnumMap<MousePositions, Integer>> clickActive
+
+	    + boolean setMousePos(int mouseX, int mouseY)
+	    + int[] getMousePos()
+	    + void setScroll(float scrollX, float scrollY)
+	    + boolean leftClick(boolean event)
+	    + boolean rightClick(boolean event)
+	    + boolean click(int button, boolean event)
+	    + HashMap<Integer, EnumMap<MousePositions, Integer>> getClicks()
+	    + void setCTRL(boolean event)
+	    + boolean setKey(int key, boolean event)
+	    + ArrayList<Integer> getKeys()
+	    + void handle()
+	    + void {abstract} handleLogic
+	}
+
+	abstract class AbstractInputProcessor extends InputAdapter {
+	    - AbstractInputHandler handler
+	    + AbstractInputHandler getHandler()
+	    + void setHandler(AbstractInputHandler handler)
+	}
+
+	class KeyProcessor extends AbstractInputProcessor {
+	    + boolean keyDown(int keycode)
+	    + boolean keyUp(int keycode)
+	}
+
+	class PointerProcessor extends AbstractInputProcessor {
+	    + boolean mouseMoved(int screenX, int screenY)
+	    + boolean scrolled(float amountX, float amountY)
+	    + boolean touchDown(int screenX, int screenY, int pointer, int button)
+	    + boolean touchUp(int screenX, int screenY, int pointer, int button)
+	}
+
+	class GlobalInputHandler extends AbstractInputHandler
+	class MenuInputHandler extends AbstractInputHandler
+	class EndInputHandler extends AbstractInputHandler
+	class GameInputHandler extends AbstractInputHandler
+	class PauseInputHandler extends AbstractInputHandler
+	class NullInputHandler extends AbstractInputHandler
+    }
+
+    enum ScreenStates {
+	# MENU
+	# GAME
+	# PAUSE
+	# END
+    }
+
+    class ClientManager {
+	~ Initialiser game
+	~ Grid grid
+	- GlobalInputListener input
+	- ScreenAdapter activeScreen
+	+ void create()
+	+ void setScreen(ScreenStates screen)
+	+ void handleInput()
+	+ void pause()
+	+ void startGame()
+	+ void endGame()
+	+ void quitGame()
+	+ void resume()
+    }
+
+    abstract class AbstractGameScreen extends ScreenAdapter {
+	- int VIEWPORT_WIDTH = 40
+	- int VIEWPORT_HEIGHT = 40
+	~ ClientManager manager
+	~ Grid grid
+	~ FitViewport viewport
+	- float delta
+	~ SpriteBatch batch
+	~ BitmapFont font
+	~ ShapeRenderer shapeRenderer
+	+ void render(float delta)
+	+ void {abstract} input()
+	+ void {abstract} logic()
+	+ void {abstract} draw()
+	+ float getDelta()
+	+ void resize(int width, int height)
+	+ void dispose()
+    }
+
+    class MainMenu extends AbstractGameScreen
+    class PauseMenu extends AbstractGameScreen
+    class EndScreen extends AbstractGameScreen
+    class GameScreen
+    class AssetManager
+
+    ClientManager --> GlobalInputListener
+    ClientManager --> UIToolkit
+}
+@enduml

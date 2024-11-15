@@ -1,0 +1,74 @@
+@startuml
+package "Config" {
+    enum MapSizes {
+        # SMALL
+        # MEDIUM
+        # LARGE
+        # HUGE
+    }
+}
+package "Grid" {
+    class Grid {
+        - size: MapSizes
+        - x: byte
+        - y: byte
+        - grid: ArrayList<ArrayList<Tile>>
+        - void gridInit(MapSizes size)
+        + MapSizes getSize()
+        + byte getDimensionX()
+        + byte getDimensionY()
+        + Tile getTile(byte x, byte y)
+        + boolean isPlaceable(byte x, byte y)
+        + boolean isPlaceable(Tile t)
+        + boolean isEdge(byte x, byte y)
+        + boolean isTile(byte x, byte y)
+        + boolean updateTile(byte x, byte y, GameObject newContent, GridLayers layer)
+    }
+    note left of Grid::grid
+        Contains 2D 
+        ArrayList of 
+        the grid tiles
+    end note
+    class Tile {
+        - byte x
+        - byte y
+        - EnumMap<GridLayers, GameObject> layers
+        + byte getCoordX()
+        + byte getCoordY()
+        + GameObject getLayer(GridLayers layer)
+        + void setLayer(GridLayers layer, GameObject content)
+        + boolean isDevelopable()
+        + boolean isEmpty(GridLayers layer)
+        + boolean isMutable(GridLayers layer)
+        + boolean isRotatable(GridLayers layer)
+    }
+    note left of Tile::layers
+        Contains the 
+        GameObjects within 
+        each grid layer
+    end note
+    enum GridLayers {
+        # BACKGROUND
+        # FOREGROUND
+        # DYNAMIC
+        # PERSONAL
+    }
+}
+package "World" {
+    abstract class GameObject {
+        - TextureMap texture
+        + TextureMap getTexture()
+        + void setTexture(TextureMap texture)
+    }
+
+    note bottom of GameObject 
+        (More on this shortly)
+    end note
+}
+
+Grid --> MapSizes: Assigning a preset map size
+Grid --> Tile: Objects that make up the grid
+Tile --> GameObject: Buildings, roads, terrain
+Tile --> GridLayers: Layers of the grid for that tile
+
+@enduml
