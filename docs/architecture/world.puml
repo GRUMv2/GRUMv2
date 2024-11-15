@@ -1,0 +1,73 @@
+@startuml
+package "Config" {
+    enum TextureMap {
+	# TERRAIN : "terrain.png"
+	# LAKE : "lake.png"
+	# ROAD_STRAIGHT : "road_straight.png"
+	# ACCOMMODATION : "accommodation.png"
+	# ...
+	- String texture
+	+ String getTexture()
+    }
+}
+package "World" {
+    interface IGameObject {
+	+ TextureMap {abstract} getTexture()
+	+ void {abstract} setTexture(TextureMap texture)
+    }
+    interface Developable {
+    }
+    interface Immutable {
+    }
+    interface Mutable {
+    }
+    interface Placeable extends Mutable {
+    }
+    interface Rotatable {
+	- int orientation
+	+ int getOrientation()
+	+ void setOrientation(int orientation)
+    }
+    abstract class GameObject implements IGameObject {
+	- TextureMap texture
+	+ TextureMap getTexture()
+	+ void setTexture(TextureMap texture)
+    }
+    abstract class BackgroundGameObject extends GameObject implements Immutable {
+    }
+    abstract class Water extends BackgroundGameObject {
+    }
+    class Lake extends Water {
+    }
+    class River extends Water implements Rotatable {
+    }
+    class Terrain extends BackgroundGameObject implements Developable {
+    }
+    abstract class ForegroundGameObject extends GameObject {
+    }
+    abstract class ImmutableForegroundObject extends ForegroundGameObject implements Immutable {
+    }
+    abstract class PlaceableForegroundObject extends ForegroundGameObject implements Placeable {
+    }
+    class Road extends ImmutableForegroundObject implements Rotatable {
+    }
+    class Building extends PlaceableForegroundObject {
+	- String name
+	- String description
+	+ String getName()
+	+ String getDescription()
+    }
+    class Accommodation extends Building {
+    }
+    class Canteen extends Building {
+    }
+    class SportsCentre extends Building {
+    }
+    class LectureHall extends Building {
+    }
+}
+
+IGameObject --> TextureMap
+GameObject --> TextureMap
+
+@enduml

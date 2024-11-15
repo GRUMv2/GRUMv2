@@ -1,0 +1,59 @@
+@startuml
+package GAM {
+    class Initialiser #ff4040
+    class Loader #00ff00
+    package client #8f40ff {
+	class ClientManager
+	class AbstractGameScreen
+	class MainMenuScreen
+	class GameScreen
+	class PauseScreen
+	class EndScreen
+	package ui #af70ff {
+	    class Layout <UIElement>
+	    interface UIElement
+	}
+	package input #af70ff {
+	    class AbstractInputHandler
+	}
+    }
+    package "server (Threaded)" as server #orange {
+	class ServerManager
+	class EventHandler
+	class Popup
+	class Simulation
+	class TimeHandler
+	package events #ff8300 {
+	    class MeteorEvent
+	}
+    }
+    package world #aqua {
+	class GameObject
+    }
+    package config {
+	class Config
+	class Settings
+    }
+    package grid #grey {
+	class Grid
+	class Tile
+    }
+}
+
+Initialiser -[#red]-> Loader
+Loader -[#00ff00]-> grid
+grid -[#grey]-> world
+Loader -[#00ff00]-> client
+Loader -[#00ff00]-> server
+Initialiser -[#red]-> config
+Loader -[#00ff00]-> config
+grid -[#grey]-> config
+world -[#aqua]-> config
+client -[#8f40ff]-> config
+server -[#orange]-> config
+client -[#8f40ff]-> world
+client -[#8f40ff]-> server
+client -[#8f40ff]-> ui
+client -[#8f40ff]-> input
+server -[#orange]-> events
+@enduml
